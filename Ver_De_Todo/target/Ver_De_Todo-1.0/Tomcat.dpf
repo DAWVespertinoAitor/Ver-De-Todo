@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context docBase="C:\archivo" path="/Ver_De_Todo">
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/VDT" password="2018" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/ver_de_todo" username="java2018"/>
+</Context>
