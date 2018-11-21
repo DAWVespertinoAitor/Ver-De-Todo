@@ -30,8 +30,8 @@ public class Canal implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="idCanal")
     private int idCanal;
-    @Column(name="nombre", length=80)
-    private String nombre;
+    @Column(name="nombreCanal", length=80)
+    private String nombreCanal;
     @Column(name="numSuscriptores")
     private int numSuscriptores;
 
@@ -46,9 +46,9 @@ public class Canal implements Serializable {
     public Canal() {
     }
 
-    public Canal(int idCanal, String nombre, int numSuscriptores) {
+    public Canal(int idCanal, String nombreCanal, int numSuscriptores) {
         this.idCanal = idCanal;
-        this.nombre = nombre;
+        this.nombreCanal = nombreCanal;
         this.numSuscriptores = numSuscriptores;
     }
     
@@ -59,9 +59,9 @@ public class Canal implements Serializable {
 ////        this.idUsuario = idUsuario;
 //    }
 
-    public Canal(int idCanal, String nombre, int numSuscriptores, /*Usuario idUsuario,*/ List<Suscriptor> idSuscriptor) {
+    public Canal(int idCanal, String nombreCanal, int numSuscriptores, /*Usuario idUsuario,*/ List<Suscriptor> idSuscriptor) {
         this.idCanal = idCanal;
-        this.nombre = nombre;
+        this.nombreCanal = nombreCanal;
         this.numSuscriptores = numSuscriptores;
 //        this.idUsuario = idUsuario;
         this.idSuscriptor = idSuscriptor;
@@ -75,12 +75,12 @@ public class Canal implements Serializable {
         this.idCanal = idCanal;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreCanal() {
+        return nombreCanal;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreCanal(String nombreCanal) {
+        this.nombreCanal = nombreCanal;
     }
 
     public int getNumSuscriptores() {
@@ -109,7 +109,7 @@ public class Canal implements Serializable {
 
     @Override
     public String toString() {
-        return "Canal{" + "idCanal=" + idCanal + ", nombre=" + nombre + ", numSuscriptores=" + numSuscriptores /*+ ", idUsuario=" + idUsuario*/ + ", idSuscriptor=" + idSuscriptor + '}';
+        return "Canal{" + "idCanal=" + idCanal + ", nombreCanal=" + nombreCanal + ", numSuscriptores=" + numSuscriptores /*+ ", idUsuario=" + idUsuario*/ + ", idSuscriptor=" + idSuscriptor + '}';
     }
 
     

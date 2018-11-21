@@ -39,7 +39,7 @@ public class Context implements ServletContextListener {
         Usuario usuario = new Usuario();
         Canal canal = new Canal();
         
-        canal.setNombre("TheSenior96");
+        canal.setNombreCanal("TheSenior96");
         canal.setNumSuscriptores(5);
         
         usuario.setNombreReal("Aitor");
@@ -49,7 +49,7 @@ public class Context implements ServletContextListener {
         usuario.setPassword("1234");
         usuario.setIdCanal(canal);
         
-        gdao.insertUpdate(usuario);
+//        gdao.insertUpdate(usuario);
         
         //usuario = (Usuario) gdao.getOne(1, Usuario.class);
         

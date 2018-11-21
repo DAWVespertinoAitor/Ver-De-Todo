@@ -5,18 +5,23 @@
  */
 package es.aitor.controllers;
 
+import es.aitor.beans.Canal;
 import es.aitor.beans.Usuario;
 import es.aitor.dao.IGenericoDAO;
 import es.aitor.daofactory.DAOFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.beanutils.BeanUtils;
 
 /**
  *
@@ -38,7 +43,7 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         HttpSession sesion = request.getSession(true);
 
-        String url = "index.jsp";
+        String url = null;
         String opcionRegistro = request.getParameter("loginRegistro");
 
         DAOFactory daof = DAOFactory.getDAOFactory();
@@ -57,20 +62,20 @@ public class Login extends HttpServlet {
 //                usuarioLogin2 = (Usuario) gdao.getOne(1, Usuario.class);
                 System.out.println(emailLogin);
                 System.out.println(passwdLogin);
-                if(usuarioLogin2 != null){
-                    System.out.println("He obtenido en usuarioLogin 2");
-                    System.out.println("correElectronico "+usuarioLogin2.getCorreoElectronico());
+                usuarioLogin = (List<Usuario>) gdao.getUsuarioValidacion(emailLogin, passwdLogin, "usuarios");
+                   
+                for(int i=0;i<usuarioLogin.size();i++){
+                    System.out.println("Usuario correo "+usuarioLogin.get(i).getCorreoElectronico());
+                    usuarioLogin2 = usuarioLogin.get(i);
                 }
-                usuarioLogin = gdao.getUsuarioValidacion(emailLogin, passwdLogin, "usuarios");
                 
-
-                if (usuarioLogin == null) {
-//                    url = "JSP/loginRegistro.jsp";
+                
+                if (usuarioLogin2 == null) {
+                    url = "index.jsp";
                     request.setAttribute("datosErroneos", true);
                     request.setAttribute("email", emailLogin);
                 } else {
-                    System.out.println("EEEEEEEEEEEH");
-                    System.out.println("Encontrado");
+                    url = "JSP/inicio.jsp";
 //                    if(usuarioLogin.getTipo() == 'a'){
 //                        url = "JSP/Admin/eleccion.jsp";
 //                    }
@@ -86,6 +91,31 @@ public class Login extends HttpServlet {
 //                int pedidoProducto = 0;
 //                sesion.setAttribute("total", (int) pedidoProducto);
 //                request.getRequestDispatcher(url).forward(request, response);
+                break;
+            case "registro":
+                url = "JSP/inicio.jsp";
+                Usuario usuario = new Usuario();
+                Canal canal = new Canal();
+//                String claveRepetida = request.getParameter("claveR");
+//                boolean clavesIguales = false;
+                
+                try {
+                    BeanUtils.populate(usuario, request.getParameterMap());
+                    BeanUtils.populate(canal, request.getParameterMap());
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InvocationTargetException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                usuario.setIdCanal(canal);
+                gdao.insertUpdate(usuario);
+//                if(usuario.getPassword().equals(claveRepetida)){
+//                    clavesIguales = true;
+//                }
+                
+                
+                
                 break;
         }
         request.getRequestDispatcher(url).forward(request, response);

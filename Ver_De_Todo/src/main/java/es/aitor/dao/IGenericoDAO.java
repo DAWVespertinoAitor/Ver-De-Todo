@@ -19,6 +19,7 @@ public interface IGenericoDAO<T> {
 //    public <T> List<T> getGroupBy(String entidad, String groupBy);
     public <T> T getOne(Serializable pk, Class<T> claseEntidad);
     public void delete(T objeto);
-    public <T> T getUsuarioExistente(String email, Class<T> claseEntidad);
+    public <T> List<T> getUsuarioExistente(String email);
+    public <T> List<T> getCanalExistente(String canal);
     public <T> List<T> getUsuarioValidacion(String email, String password, String claseEntidad);
 }

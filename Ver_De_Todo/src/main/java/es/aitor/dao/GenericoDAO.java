@@ -5,6 +5,8 @@
  */
 package es.aitor.dao;
 
+import es.aitor.beans.Canal;
+import es.aitor.beans.Usuario;
 import es.aitor.context.Context;
 import es.aitor.persistencia.HibernateUtil;
 import java.io.Serializable;
@@ -19,6 +21,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 
 import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 
 /**
  *
@@ -65,9 +68,7 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
         List<T> listadoResultados = null;
         try {
             startTransaction();
-            System.out.println("Aqui llegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             listadoResultados = sesion.createQuery(" from " + entidad).list();
-            System.out.println("Y aqui no");
         } catch (HibernateException he) {
             this.handleExcepcion(he);
         } finally {
@@ -107,12 +108,18 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
     }
     
     @Override
-    public <T> T getUsuarioExistente(String email, Class<T> claseEntidad) {
-        T objetoRecuperado = null;
-
+    public <T> List<T> getUsuarioExistente(String email) {
+        
+        List<T> objetoRecuperado = null;
+        Query query = null;
+        String sql = "SELECT * FROM usuarios WHERE correoElectronico='"+email+"';";
+        
         try {
             startTransaction();
-            objetoRecuperado = sesion.get(claseEntidad, email);
+            query = sesion.createSQLQuery(sql);
+            query.setResultTransformer(Transformers.aliasToBean(Usuario.class));
+            List<Usuario> listaUsuario = query.list();
+            objetoRecuperado = (List<T>) listaUsuario;
         } catch (HibernateException he) {
             this.handleExcepcion(he);
         } finally {
@@ -121,17 +128,42 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
 
         return objetoRecuperado;
     }
+    
     @Override
-    public <T> List<T> getUsuarioValidacion(String email, String password, String claseEntidad) {
-//         objetoRecuperado2 = null;
+    public <T> List<T> getCanalExistente(String canal) {
+        
         List<T> objetoRecuperado = null;
-        String sql = "select correoElectronico, password from "+ claseEntidad+" WHERE correoElectronico='"+email+"' AND password='"+password+"'";
+        Query query = null;
+        String sql = "SELECT * FROM canales WHERE nombreCanal='"+canal+"';";
+        
         try {
             startTransaction();
-            objetoRecuperado = sesion.createSQLQuery(sql).list();
-            System.out.println("Llego hasta aqui?");
-            System.out.println("Si y tengo esto "+objetoRecuperado.toString());
-//            objetoRecuperado2 = (T) objetoRecuperado;
+            query = sesion.createSQLQuery(sql);
+            query.setResultTransformer(Transformers.aliasToBean(Canal.class));
+            List<Canal> listaCanal = (List<Canal>) query.list();
+            objetoRecuperado = (List<T>) listaCanal;
+        } catch (HibernateException he) {
+            this.handleExcepcion(he);
+        } finally {
+            this.endTransaction();
+        }
+
+        return objetoRecuperado;
+    }
+    
+    @Override
+    public <T> List<T> getUsuarioValidacion(String email, String password, String claseEntidad) {
+        
+        List<T> objetoRecuperado = null;
+        Query query = null;
+        String sql = "SELECT * from "+ claseEntidad+" WHERE correoElectronico='"+email+"' AND password="+password+";";
+        try {
+            startTransaction();
+            query = sesion.createSQLQuery(sql);
+            query.setResultTransformer(Transformers.aliasToBean(Usuario.class));
+            List<Usuario> listaUsuario = query.list();
+            objetoRecuperado = (List<T>) listaUsuario;
+            
         } catch (HibernateException he) {
             this.handleExcepcion(he);
         } finally {

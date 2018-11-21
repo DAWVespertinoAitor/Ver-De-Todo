@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,7 +15,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Shop Homepage - Start Bootstrap Template</title>
+        <title>Login - Ver de Todo</title>
 
         <!-- Bootstrap core CSS -->
         <!--<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
@@ -24,12 +25,13 @@
         <link href="CSS/shop-homepage.css" rel="stylesheet">
         <link href="CSS/index.css" rel="stylesheet">
         <link href="CSS/full-slider.css" rel="stylesheet">
-
+        <script type="text/javascript" src="JS/login.js"></script>
+        
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
-
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <style>
@@ -57,7 +59,7 @@
                 border-radius: 5px;
                 -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
                 background-color: #069302; }
-            
+
             .banner-sec{/*background:url(https://static.pexels.com/photos/33972/pexels-photo.jpg)  no-repeat left bottom;*/ background-size:cover; min-height:500px; border-radius: 0 10px 10px 0; padding:0;}
             .container{background:#fff; border-radius: 10px; box-shadow:15px 20px 0px rgba(0,0,0,0.1);}
             .carousel-inner{border-radius:0 10px 10px 0;}
@@ -118,43 +120,46 @@
                                 <!-- Slide Two - Set the background image for this slide in the line below -->
                                 <div class="carousel-item signin1 scrollbar scrollbar-primary">
                                     <h2 class="text-center">Registro</h2>
-                                    <form class="login-form" style="margin-right: 5px;">
+                                    <form class="login-form" action="Login" method="post" style="margin-right: 5px;">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1" class="text-uppercase">Correo Electrónico</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <div style="color: red;" id="existeCorreo"></div>
+                                            <label for="correoElectronico" class="text-uppercase">Correo Electrónico</label>
+                                            <input type="email" class="form-control" placeholder="" id="correoElectronico" name="correoElectronico"  onkeyup="busquedaCorreo(this.value)" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputPassword1" class="text-uppercase">Contraseña</label>
-                                            <input type="password" class="form-control" placeholder="">
+                                            <div style="color: red;" id="passDiferentes"></div>
+                                            <label for="password" class="text-uppercase">Contraseña</label>
+                                            <input type="password" class="form-control" placeholder="" id="password" name="password" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputPassword1" class="text-uppercase">Repetir Contraseña</label>
-                                            <input type="password" class="form-control" placeholder="">
+                                            <label for="claveR" class="text-uppercase">Repetir Contraseña</label>
+                                            <input type="password" class="form-control" placeholder="" id="claveR" name="claveR" onkeyup="contraRepetidaIgual(this.value)" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputPassword1" class="text-uppercase">Nombre real</label>
-                                            <input type="password" class="form-control" placeholder="">
+                                            <label for="nombreReal" class="text-uppercase">Nombre real</label>
+                                            <input type="text" class="form-control" placeholder="" id="nombreReal" name="nombreReal" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputPassword1" class="text-uppercase">Primer apellido</label>
-                                            <input type="password" class="form-control" placeholder="">
+                                            <label for="apellido1" class="text-uppercase">Primer apellido</label>
+                                            <input type="text" class="form-control" placeholder="" id="apellido1" name="apellido1" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputPassword1" class="text-uppercase">Segundo apellido</label>
-                                            <input type="password" class="form-control" placeholder="">
+                                            <label for="apellido2" class="text-uppercase">Segundo apellido (Opcional) </label>
+                                            <input type="text" class="form-control" placeholder="" id="apellido2" name="apellido2">
                                         </div>
-                                        <hr>
+                                        <hr style="background-color: #ced4da;">
                                         <div class="form-group">
-                                            <label for="exampleInputPassword1" class="text-uppercase">Nombre del Canal</label>
-                                            <input type="password" class="form-control" placeholder="">
+                                            <div style="color: red;" id="existeCanal"></div>
+                                            <label for="nombreCanal" class="text-uppercase">Nombre del Canal</label>
+                                            <input type="text" class="form-control" placeholder="" id="nombreCanal" name="nombreCanal" onkeyup="busquedaCanal(this.value)" required>
                                         </div>
-                                        <div class="form-group">
+                                        <!--<div class="form-group">
                                             <label for="exampleInputPassword1" class="text-uppercase">Icono de usuario/canal</label>
-                                            <input type="password" class="form-control" placeholder="">
-                                        </div>
-                                        <div class="form-check">
+                                            <input type="file" class="form-control" placeholder="">
+                                        </div>-->
+                                        <div class="form-check"  id="botonRegistro">
                                             <input type="hidden" name="loginRegistro" value="registro"/>
-                                            <input type="submit" class="btn btn-login float-right" value="Enviar">
+                                            <input type="submit" class="btn btn-login float-right" id="botonRegistro2" value="Enviar" disabled="disabled">
                                         </div>
                                     </form>
                                 </div>

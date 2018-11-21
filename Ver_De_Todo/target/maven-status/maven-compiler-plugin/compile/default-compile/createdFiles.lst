@@ -13,5 +13,6 @@ es\aitor\beans\Usuario.class
 es\aitor\beans\Video.class
 es\aitor\dao\GenericoDAO.class
 es\aitor\beans\Pelicula.class
+es\aitor\controllers\RegistroAjax.class
 es\aitor\controllers\SubirArchivo.class
 es\aitor\persistencia\HibernateUtil.class
