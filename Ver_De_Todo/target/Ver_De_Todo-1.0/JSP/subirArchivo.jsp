@@ -14,7 +14,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Shop Homepage - Start Bootstrap Template</title>
+        <title>Subir Archivos | Ver-de Todo</title>
 
         <!-- Bootstrap core CSS -->
         <!--<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
@@ -42,7 +42,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="../index.jsp">Inicio</a>
+                            <a class="nav-link" href="./inicio.jsp">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./videos.jsp">Videos</a>

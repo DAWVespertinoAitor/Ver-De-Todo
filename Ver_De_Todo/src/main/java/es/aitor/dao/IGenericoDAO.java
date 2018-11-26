@@ -21,5 +21,6 @@ public interface IGenericoDAO<T> {
     public void delete(T objeto);
     public <T> List<T> getUsuarioExistente(String email);
     public <T> List<T> getCanalExistente(String canal);
+    public <T> List<T> getMisSuscripciones(int canal);
     public <T> List<T> getUsuarioValidacion(String email, String password, String claseEntidad);
 }

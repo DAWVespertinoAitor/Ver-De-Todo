@@ -48,6 +48,11 @@ and open the template in the editor.
     margin-bottom: 6px !important;
 }
 
+.icon-white{
+    color: #343a40;
+    transition: all .7s ease;
+}
 
-
-
+.icon-white:hover{
+    color: white;
+}

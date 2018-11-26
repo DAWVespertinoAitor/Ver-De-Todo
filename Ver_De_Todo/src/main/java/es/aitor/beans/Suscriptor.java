@@ -25,45 +25,43 @@ public class Suscriptor implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="idSuscriptor")
-    private int idSuscripcion;
+    private int idSuscriptor;
     
     @Column(name="idUsuarioSuscriptor")
     private int idUsuarioSuscriptor;
     
-    @ManyToOne
-    @JoinColumn(name = "idCanal")
-    private Canal idCanal;
+//    @ManyToOne
+//    @JoinColumn(name = "idUsuario")
+    private int idUsuario;
 
     public Suscriptor() {
     }
 
-    public Suscriptor(int idSuscripcion, int idUsuarioSuscriptor) {
-        this.idSuscripcion = idSuscripcion;
+    public Suscriptor(int idSuscriptor, int idUsuarioSuscriptor) {
+        this.idSuscriptor = idSuscriptor;
         this.idUsuarioSuscriptor = idUsuarioSuscriptor;
     }
 
-    public Suscriptor(int idSuscripcion, int idUsuarioSuscriptor, Canal idCanal) {
-        this.idSuscripcion = idSuscripcion;
+    public Suscriptor(int idSuscriptor, int idUsuarioSuscriptor, int idUsuario) {
+        this.idSuscriptor = idSuscriptor;
         this.idUsuarioSuscriptor = idUsuarioSuscriptor;
-        this.idCanal = idCanal;
+        this.idUsuario = idUsuario;
     }
 
-    
-
-    public int getIdSuscripcion() {
-        return idSuscripcion;
+    public int getIdSuscriptor() {
+        return idSuscriptor;
     }
 
-    public void setIdSuscripcion(int idSuscripcion) {
-        this.idSuscripcion = idSuscripcion;
+    public void setIdSuscriptor(int idSuscriptor) {
+        this.idSuscriptor = idSuscriptor;
     }
 
-    public Canal getIdCanal() {
-        return idCanal;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdCanal(Canal idCanal) {
-        this.idCanal = idCanal;
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public int getIdUsuarioSuscriptor() {
@@ -76,8 +74,10 @@ public class Suscriptor implements Serializable {
 
     @Override
     public String toString() {
-        return "Suscriptor{" + "idSuscripcion=" + idSuscripcion + ", idCanal=" + idCanal + ", idUsuarioSuscriptor=" + idUsuarioSuscriptor + '}';
+        return "Suscriptor{" + "idSuscriptor=" + idSuscriptor + ", idUsuario=" + idUsuario + ", idUsuarioSuscriptor=" + idUsuarioSuscriptor + '}';
     }
+
+    
 
     
 

@@ -4,6 +4,7 @@
     Author     : aitor
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,18 +15,21 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Shop Homepage - Start Bootstrap Template</title>
+        <title>Peliculas | Ver-de Todo</title>
 
         <!-- Bootstrap core CSS -->
         <!--<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
         <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+        <!--Font awesome-->
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
 
         <!-- Custom styles for this template -->
         <link href="../CSS/shop-homepage.css" rel="stylesheet">
         <link href="../CSS/index.css" rel="stylesheet">
 
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
-        
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
@@ -43,7 +47,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="../index.jsp">Inicio</a>
+                            <a class="nav-link" href="./inicio.jsp">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./videos.jsp">Videos</a>
@@ -71,30 +75,9 @@
             <div class="row">
                 <div class="col-lg-3 menu">
                     <div class="list-group collapse">
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
+                        <c:forEach var="canales" items="${sessionScope.canales}">
+                            <a href="#" class="list-group-item"><c:out value="${canales.nombreCanal}"/></a>
+                        </c:forEach>
                     </div>
 
                 </div>
@@ -154,10 +137,15 @@
                                         <a href="#">Titulo</a>
                                     </h4>
                                     <h5>Canal</h5>
+                                    <small class="text-muted">Serie</small>
                                     <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">Serie</small>
+
+                                    <button id="menu-navbar" class="navbar-toggler" type="button"
+                                            data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #069d02;">
+                                        <span class="fas fa-user-plus icon-white"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +165,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
                                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>

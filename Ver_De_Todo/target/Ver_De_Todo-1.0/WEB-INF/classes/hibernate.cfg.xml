@@ -8,7 +8,7 @@
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="hibernate.connection.datasource">java:comp/env/jdbc/VDT</property>
     <property name="hibernate.connection.pool_size">10</property>
-    <mapping class="es.aitor.beans.Canal"/>
+    <!--<mapping class="es.aitor.beans.Canal"/>-->
     <mapping class="es.aitor.beans.Pelicula"/>
     <mapping class="es.aitor.beans.Programacion"/>
     <mapping class="es.aitor.beans.Serie"/>

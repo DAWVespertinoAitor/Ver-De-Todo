@@ -39,7 +39,7 @@ public class Canal implements Serializable {
     @PrimaryKeyJoinColumn
     private Usuario idUsuario;
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name="idCanal")
     private List<Suscriptor> idSuscriptor;
     

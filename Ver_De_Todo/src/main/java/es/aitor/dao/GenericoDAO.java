@@ -6,6 +6,7 @@
 package es.aitor.dao;
 
 import es.aitor.beans.Canal;
+import es.aitor.beans.Suscriptor;
 import es.aitor.beans.Usuario;
 import es.aitor.context.Context;
 import es.aitor.persistencia.HibernateUtil;
@@ -134,14 +135,39 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
         
         List<T> objetoRecuperado = null;
         Query query = null;
-        String sql = "SELECT * FROM canales WHERE nombreCanal='"+canal+"';";
+        String sql = "SELECT * FROM usuarios WHERE nombreCanal='"+canal+"';";
         
         try {
             startTransaction();
             query = sesion.createSQLQuery(sql);
-            query.setResultTransformer(Transformers.aliasToBean(Canal.class));
-            List<Canal> listaCanal = (List<Canal>) query.list();
+            query.setResultTransformer(Transformers.aliasToBean(Usuario.class));
+            List<Usuario> listaCanal = (List<Usuario>) query.list();
             objetoRecuperado = (List<T>) listaCanal;
+        } catch (HibernateException he) {
+            this.handleExcepcion(he);
+        } finally {
+            this.endTransaction();
+        }
+
+        return objetoRecuperado;
+    }
+    
+    @Override
+    public <T> List<T> getMisSuscripciones(int canal) {
+        
+        List<T> objetoRecuperado = null;
+        Query query = null;
+        String sql = "SELECT * FROM suscriptores WHERE idUsuarioSuscriptor="+canal+";";
+        
+        try {
+            startTransaction();
+            query = sesion.createSQLQuery(sql);
+            query.setResultTransformer(Transformers.aliasToBean(Suscriptor.class));
+            List<Suscriptor> listaSuscriptor = (List<Suscriptor>) query.list();
+            for(int i=0;i<listaSuscriptor.size();i++){
+                System.out.println("Este es el canal "+listaSuscriptor.get(i).getIdUsuario());
+            }
+            objetoRecuperado = (List<T>) listaSuscriptor;
         } catch (HibernateException he) {
             this.handleExcepcion(he);
         } finally {

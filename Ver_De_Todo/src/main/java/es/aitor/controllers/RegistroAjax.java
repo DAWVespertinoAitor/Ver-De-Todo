@@ -75,10 +75,10 @@ public class RegistroAjax extends HttpServlet {
             case "existeCanal":
                 String nombreExistente = request.getParameter("canal");
                 
-                List<Canal> canalExistente = null;
-                Canal canalVal = null;
+                List<Usuario> canalExistente = null;
+                Usuario canalVal = null;
 
-                canalExistente = (List<Canal>) gdao.getCanalExistente(nombreExistente);
+                canalExistente = (List<Usuario>) gdao.getCanalExistente(nombreExistente);
                 
                 for(int i=0;i<canalExistente.size();i++){
 //                    System.out.println("Usuario correo "+usuarioExistente.get(i).getCorreoElectronico());

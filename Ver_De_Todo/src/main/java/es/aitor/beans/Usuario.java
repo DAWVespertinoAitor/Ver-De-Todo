@@ -40,21 +40,30 @@ public class Usuario implements Serializable {
     private String correoElectronico;
     @Column(name="password")
     private String password;
-
-    @OneToOne(cascade={CascadeType.ALL})
-    @PrimaryKeyJoinColumn
-    private Canal idCanal;
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @Column(name="nombreCanal", length=80)
+    private String nombreCanal;
+    @Column(name="numSuscriptores")
+    private int numSuscriptores;
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinColumn(name="idUsuario ")
+    private List<Suscriptor> listaSuscriptores;
+
+//    @OneToOne(cascade={CascadeType.ALL})
+//    @PrimaryKeyJoinColumn
+//    private Canal idCanal;
+    
+    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.LAZY)
     @JoinColumn(name="idUsuario")
     private List <Pelicula> listaPeliculas;
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.LAZY)
     @JoinColumn(name="idUsuario")
     @IndexColumn(name="orden")
     private List<Programacion> listaProgramaciones;
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.LAZY)
     @JoinColumn(name="idUsuario")
     @IndexColumn(name="orden")
     private List<Serie> listaSeries;
@@ -64,35 +73,40 @@ public class Usuario implements Serializable {
 //    @IndexColumn(name="orden")
 //    private List<Suscriptor> listaSuscriptores;
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.LAZY)
     @JoinColumn(name="idUsuario")
     @IndexColumn(name="orden")
     private List<Video> listaVideos;
     
     public Usuario() {
     }
-    
-    public Usuario(int idUsuario, String nombreReal, String apellido1, String apellido2, String correoElectronico, String password) {
-        this.idUsuario = idUsuario;
-        this.nombreReal = nombreReal;
-        this.apellido1 = apellido1;
-        this.apellido2 = apellido2;
-        this.correoElectronico = correoElectronico;
-        this.password = password;
-    }
 
-    public Usuario(int idUsuario, String nombreReal, String apellido1, String apellido2, String correoElectronico, String password, Canal idCanal, List<Pelicula> listaPeliculas, List<Programacion> listaProgramaciones, List<Serie> listaSeries/*, List<Suscriptor> listaSuscriptores*/, List<Video> listaVideos) {
+    public Usuario(int idUsuario, String nombreReal, String apellido1, String apellido2, String correoElectronico, String password, String nombreCanal, int numSuscriptores) {
         this.idUsuario = idUsuario;
         this.nombreReal = nombreReal;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.correoElectronico = correoElectronico;
         this.password = password;
-        this.idCanal = idCanal;
+        this.nombreCanal = nombreCanal;
+        this.numSuscriptores = numSuscriptores;
+    }
+    
+    
+
+    public Usuario(int idUsuario, String nombreReal, String apellido1, String apellido2, String correoElectronico, String password, String nombreCanal, int numSuscriptores, List<Suscriptor> listaSuscriptores, List<Pelicula> listaPeliculas, List<Programacion> listaProgramaciones, List<Serie> listaSeries, List<Video> listaVideos) {
+        this.idUsuario = idUsuario;
+        this.nombreReal = nombreReal;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.correoElectronico = correoElectronico;
+        this.password = password;
+        this.nombreCanal = nombreCanal;
+        this.numSuscriptores = numSuscriptores;
+        this.listaSuscriptores = listaSuscriptores;
         this.listaPeliculas = listaPeliculas;
         this.listaProgramaciones = listaProgramaciones;
         this.listaSeries = listaSeries;
-//        this.listaSuscriptores = listaSuscriptores;
         this.listaVideos = listaVideos;
     }
 
@@ -144,12 +158,28 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public Canal getIdCanal() {
-        return idCanal;
+    public String getNombreCanal() {
+        return nombreCanal;
     }
 
-    public void setIdCanal(Canal idCanal) {
-        this.idCanal = idCanal;
+    public void setNombreCanal(String nombreCanal) {
+        this.nombreCanal = nombreCanal;
+    }
+
+    public int getNumSuscriptores() {
+        return numSuscriptores;
+    }
+
+    public void setNumSuscriptores(int numSuscriptores) {
+        this.numSuscriptores = numSuscriptores;
+    }
+
+    public List<Suscriptor> getListaSuscriptores() {
+        return listaSuscriptores;
+    }
+
+    public void setListaSuscriptores(List<Suscriptor> listaSuscriptores) {
+        this.listaSuscriptores = listaSuscriptores;
     }
 
     public List <Pelicula> getListaPeliculas() {

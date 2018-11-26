@@ -39,15 +39,15 @@ public class Context implements ServletContextListener {
         Usuario usuario = new Usuario();
         Canal canal = new Canal();
         
-        canal.setNombreCanal("TheSenior96");
-        canal.setNumSuscriptores(5);
-        
-        usuario.setNombreReal("Aitor");
-        usuario.setApellido1("Muñoz");
-        usuario.setApellido2("Blanco");
-        usuario.setCorreoElectronico("tadfasdfasd@gmail.com");
-        usuario.setPassword("1234");
-        usuario.setIdCanal(canal);
+//        canal.setNombreCanal("TheSenior96");
+//        canal.setNumSuscriptores(5);
+//        
+//        usuario.setNombreReal("Aitor");
+//        usuario.setApellido1("Muñoz");
+//        usuario.setApellido2("Blanco");
+//        usuario.setCorreoElectronico("tadfasdfasd@gmail.com");
+//        usuario.setPassword("1234");
+//        usuario.setIdCanal(canal);
         
 //        gdao.insertUpdate(usuario);
         

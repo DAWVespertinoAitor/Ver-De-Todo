@@ -4,6 +4,7 @@
     Author     : aitor
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Shop Homepage - Start Bootstrap Template</title>
+        <title>Series | Ver-de Todo</title>
 
         <!-- Bootstrap core CSS -->
         <!--<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
@@ -43,7 +44,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="../index.jsp">Inicio</a>
+                            <a class="nav-link" href="./inicio.jsp">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./videos.jsp">Videos</a>
@@ -71,30 +72,9 @@
             <div class="row">
                 <div class="col-lg-3 menu">
                     <div class="list-group collapse">
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
+                        <c:forEach var="canales" items="${sessionScope.canales}">
+                            <a href="#" class="list-group-item"><c:out value="${canales.nombreCanal}"/></a>
+                        </c:forEach>
                     </div>
 
                 </div>
