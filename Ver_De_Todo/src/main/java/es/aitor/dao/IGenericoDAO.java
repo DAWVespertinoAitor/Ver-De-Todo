@@ -23,4 +23,8 @@ public interface IGenericoDAO<T> {
     public <T> List<T> getCanalExistente(String canal);
     public <T> List<T> getMisSuscripciones(int canal);
     public <T> List<T> getUsuarioValidacion(String email, String password, String claseEntidad);
+    public <T> List<T> getPeliculas(int canal);
+    public <T> List<T> getSeries(int canal);
+    public <T> List<T> getVideos(int canal);
+    
 }

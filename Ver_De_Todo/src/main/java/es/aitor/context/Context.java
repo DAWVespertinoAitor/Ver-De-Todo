@@ -10,6 +10,8 @@ import es.aitor.beans.Usuario;
 import es.aitor.dao.GenericoDAO;
 import es.aitor.dao.IGenericoDAO;
 import es.aitor.daofactory.DAOFactory;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,6 +19,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpSession;
 
 /**
  *

@@ -121,11 +121,11 @@
                                     </h4>
                                     <h5>Canal</h5>
                                     <small class="text-muted">Pelicula</small>
-                                    
+
                                     <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
                                 </div>
                                 <div class="card-footer">
-                                     <button id="menu-navbar" class="navbar-toggler" type="button"
+                                    <button id="menu-navbar" class="navbar-toggler" type="button"
                                             data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #069d02;">
                                         <span class="fas fa-user-plus icon-white"></span>
                                     </button>

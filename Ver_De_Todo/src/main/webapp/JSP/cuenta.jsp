@@ -29,7 +29,27 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
-    <body>
+    
+    <style>
+        .scrollbar {
+            float: left;
+            width: 100%;
+            background: #fff;
+            overflow-y: scroll;
+        }
+
+        .scrollbar-primary::-webkit-scrollbar {
+            width: 5px;
+            background-color: #F5F5F5; 
+        }
+
+        .scrollbar-primary::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+            background-color: #069302; 
+        }
+    </style>
+    <body class="scrollbar scrollbar-primary">
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
@@ -69,7 +89,7 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-lg-3 menu">
+                <div class="col-lg-3 menu scrollbar scrollbar-primary">
                     <div class="list-group collapse">
                         <a href="#" class="list-group-item">Canal 1</a>
                         <a href="#" class="list-group-item">Canal 2</a>

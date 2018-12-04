@@ -6,6 +6,7 @@
 package es.aitor.beans;
 
 import java.io.Serializable;
+import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +31,12 @@ public class Video implements Serializable {
     @Column(name="descripcion")
     private String descripcion;
     
+    @Column(name="nombreArchivo")
+    private String nombreArchivo;
+    
+    @Column(name="fechaDeSubida")
+    private Date fechaDeSubida;
+    
     @ManyToOne
     @JoinColumn(name = "idUsuario")
     private Usuario usuario;
@@ -37,16 +44,20 @@ public class Video implements Serializable {
     public Video() {
     }
 
-    public Video(int idVideo, String titulo, String descripcion) {
+    public Video(int idVideo, String titulo, String descripcion, String nombreArchivo, Date fechaDeSubida) {
         this.idVideo = idVideo;
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.nombreArchivo = nombreArchivo;
+        this.fechaDeSubida = fechaDeSubida;
     }
 
-    public Video(int idVideo, String titulo, String descripcion, Usuario usuario) {
+    public Video(int idVideo, String titulo, String descripcion, String nombreArchivo, Date fechaDeSubida, Usuario usuario) {
         this.idVideo = idVideo;
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.nombreArchivo = nombreArchivo;
+        this.fechaDeSubida = fechaDeSubida;
         this.usuario = usuario;
     }
 
@@ -73,6 +84,14 @@ public class Video implements Serializable {
     public void setDescripcion(String descripcion ) {
         this.descripcion = descripcion;
     }
+    
+    public String getNombreArchivo() {
+        return nombreArchivo;
+    }
+
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
+    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -82,4 +101,17 @@ public class Video implements Serializable {
         this.usuario = usuario;
     }
     
+    public Date getFechaDeSubida() {
+        return fechaDeSubida;
+    }
+
+    public void setFechaDeSubida(Date fechaDeSubida) {
+        this.fechaDeSubida = fechaDeSubida;
+    }
+
+    @Override
+    public String toString() {
+        return "Video{" + "idVideo=" + idVideo + ", titulo=" + titulo + ", descripcion=" + descripcion + ", nombreArchivo=" + nombreArchivo + ", usuario=" + usuario + '}';
+    }
+
 }

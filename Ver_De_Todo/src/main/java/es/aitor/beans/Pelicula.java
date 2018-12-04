@@ -28,8 +28,8 @@ public class Pelicula implements Serializable {
     @Column(name="titulo", length=50)
     private String titulo;
     
-    @Column(name="estreno")
-    private Date estreno;
+    @Column(name="fechaDeSubida")
+    private Date fechaDeSubida;
     
     @Column(name="genero", length=30)
     private String genero;
@@ -46,6 +46,9 @@ public class Pelicula implements Serializable {
     @Column(name="actores")
     private String actores;
     
+    @Column(name="nombreArchivo")
+    private String nombreArchivo;
+    
     @Column(name="subtitulos")
     private char subtitulos; //E=español, I=ingles, L=latino
     
@@ -56,27 +59,29 @@ public class Pelicula implements Serializable {
     public Pelicula() {
     }
 
-    public Pelicula(int idPelicula, String titulo, Date estreno, String genero, String pais, String director, String sinopsis, String actores, char subtitulos) {
+    public Pelicula(int idPelicula, String titulo, Date fechaDeSubida, String genero, String pais, String director, String sinopsis, String actores, String nombreArchivo, char subtitulos) {
         this.idPelicula = idPelicula;
         this.titulo = titulo;
-        this.estreno = estreno;
+        this.fechaDeSubida = fechaDeSubida;
         this.genero = genero;
         this.pais = pais;
         this.director = director;
         this.sinopsis = sinopsis;
         this.actores = actores;
+        this.nombreArchivo = nombreArchivo;
         this.subtitulos = subtitulos;
     }
     
-    public Pelicula(int idPelicula, String titulo, Date estreno, String genero, String pais, String director, String sinopsis, String actores, char subtitulos, Usuario usuario) {
+    public Pelicula(int idPelicula, String titulo, Date fechaDeSubida, String genero, String pais, String director, String sinopsis, String actores, String nombreArchivo, char subtitulos, Usuario usuario) {
         this.idPelicula = idPelicula;
         this.titulo = titulo;
-        this.estreno = estreno;
+        this.fechaDeSubida = fechaDeSubida;
         this.genero = genero;
         this.pais = pais;
         this.director = director;
         this.sinopsis = sinopsis;
         this.actores = actores;
+        this.nombreArchivo = nombreArchivo;
         this.subtitulos = subtitulos;
         this.usuario = usuario;
     }
@@ -105,12 +110,12 @@ public class Pelicula implements Serializable {
         this.titulo = titulo;
     }
 
-    public Date getEstreno() {
-        return estreno;
+    public Date getFechaDeSubida() {
+        return fechaDeSubida;
     }
 
-    public void setEstreno(Date estreno) {
-        this.estreno = estreno;
+    public void setFechaDeSubida(Date fechaDeSubida) {
+        this.fechaDeSubida = fechaDeSubida;
     }
 
     public String getGenero() {
@@ -153,12 +158,25 @@ public class Pelicula implements Serializable {
         this.actores = actores;
     }
 
+    public String getNombreArchivo() {
+        return nombreArchivo;
+    }
+
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
+    }
+    
     public char getSubtitulos() {
         return subtitulos;
     }
 
     public void setSubtitulos(char subtitulos) {
         this.subtitulos = subtitulos;
+    }
+
+    @Override
+    public String toString() {
+        return "Pelicula{" + "idPelicula=" + idPelicula + ", titulo=" + titulo +/* ", estreno=" + estreno +*/ ", genero=" + genero + ", pais=" + pais + ", director=" + director + ", sinopsis=" + sinopsis + ", actores=" + actores + ", nombreArchivo=" + nombreArchivo + ", subtitulos=" + subtitulos + ", usuario=" + usuario + '}';
     }
     
     

@@ -44,6 +44,9 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        
         HttpSession sesion = request.getSession(true);
 
         String url = null;
@@ -77,6 +80,7 @@ public class Login extends HttpServlet {
                     request.setAttribute("datosErroneos", true);
                     request.setAttribute("email", emailLogin);
                 } else {
+                    System.out.println("Esta es la ruta "+request.getContextPath());
                     
                     url = "./JSP/inicio.jsp";
                     
@@ -121,7 +125,8 @@ public class Login extends HttpServlet {
                 break;
         }
         System.out.println("Que direccion llevo "+url);
-        request.getRequestDispatcher(url).forward(request, response);
+        response.sendRedirect(url);
+//        request.getRequestDispatcher(url).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

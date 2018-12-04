@@ -6,6 +6,7 @@
 package es.aitor.beans;
 
 import java.io.Serializable;
+import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,11 @@ public class Serie implements Serializable {
     private int numCapitulo;
     private String idioma;
     private char subtitulos; //E=Español, I=Ingles, L=Latino;
+    @Column(name="nombreArchivo")
+    private String nombreArchivo;
     private String descripcion;
+    @Column(name="fechaDeSubida")
+    private Date fechaDeSubida;
     
     @ManyToOne
     @JoinColumn(name = "idUsuario")
@@ -42,7 +47,7 @@ public class Serie implements Serializable {
     public Serie() {
     }
 
-    public Serie(int idSerie, String tituloSerie, String temporada, String tituloCapitulo, int numCapitulo, String idioma, char subtitulos, String descripcion) {
+    public Serie(int idSerie, String tituloSerie, String temporada, String tituloCapitulo, int numCapitulo, String idioma, char subtitulos, String nombreArchivo, String descripcion, Date fechaDeSubida) {
         this.idSerie = idSerie;
         this.tituloSerie = tituloSerie;
         this.temporada = temporada;
@@ -50,10 +55,12 @@ public class Serie implements Serializable {
         this.numCapitulo = numCapitulo;
         this.idioma = idioma;
         this.subtitulos = subtitulos;
+        this.nombreArchivo = nombreArchivo;
         this.descripcion = descripcion;
+        this.fechaDeSubida = fechaDeSubida;
     }
 
-    public Serie(int idSerie, String tituloSerie, String temporada, String tituloCapitulo, int numCapitulo, String idioma, char subtitulos, String descripcion, Usuario usuario) {
+    public Serie(int idSerie, String tituloSerie, String temporada, String tituloCapitulo, int numCapitulo, String idioma, char subtitulos, String nombreArchivo, String descripcion, Date fechaDeSubida, Usuario usuario) {
         this.idSerie = idSerie;
         this.tituloSerie = tituloSerie;
         this.temporada = temporada;
@@ -61,7 +68,9 @@ public class Serie implements Serializable {
         this.numCapitulo = numCapitulo;
         this.idioma = idioma;
         this.subtitulos = subtitulos;
+        this.nombreArchivo = nombreArchivo;
         this.descripcion = descripcion;
+        this.fechaDeSubida = fechaDeSubida;
         this.usuario = usuario;
     }
 
@@ -104,6 +113,14 @@ public class Serie implements Serializable {
     public void setSubtitulos(char subtitulos) {
         this.subtitulos = subtitulos;
     }
+    
+    public String getNombreArchivo() {
+        return nombreArchivo;
+    }
+
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
+    }
 
     public String getDescripcion() {
         return descripcion;
@@ -136,7 +153,18 @@ public class Serie implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    
-    
+
+    public Date getFechaDeSubida() {
+        return fechaDeSubida;
+    }
+
+    public void setFechaDeSubida(Date fechaDeSubida) {
+        this.fechaDeSubida = fechaDeSubida;
+    }
+
+    @Override
+    public String toString() {
+        return "Serie{" + "idSerie=" + idSerie + ", tituloSerie=" + tituloSerie + ", temporada=" + temporada + ", tituloCapitulo=" + tituloCapitulo + ", numCapitulo=" + numCapitulo + ", idioma=" + idioma + ", subtitulos=" + subtitulos + ", nombreArchivo=" + nombreArchivo + ", descripcion=" + descripcion + ", usuario=" + usuario + '}';
+    }
+
 }
