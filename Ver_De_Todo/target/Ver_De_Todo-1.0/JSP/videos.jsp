@@ -24,9 +24,11 @@
         <!-- Custom styles for this template -->
         <link href="../CSS/shop-homepage.css" rel="stylesheet">
         <link href="../CSS/index.css" rel="stylesheet">
+        <!--Font awesome-->
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
 
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
-        
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
@@ -110,22 +112,56 @@
 
                     <div class="row">
 
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Pelicula</small>
-                                </div>
-                            </div>
-                        </div>
+                        <c:forEach var="canalesVideo" items="${sessionScope.canales}">
+                            <c:if test="${canalesVideo.listaVideos.size() != 0}">
+                                <div class="col-lg-12 my-4 container2" style=" padding-right: 0;">
+                                    <header>
+                                        <div id="carouselExampleIndicators" class="carousel slide">
+                                            <div class="carousel-inner" role="listbox">
+                                                <!-- Slide One - Set the background image for this slide in the line below -->
+                                                <div class="carousel-item signin1 active scrollbar scrollbar-primary">
+                                                    <div class="card h-100 col-lg-12" style="padding: 0 0;">
+                                                        <div class="card-header">
+                                                            <h5>Ultimo contenido de ${canalesVideo.nombreCanal}</h5>
+                                                        </div>
+                                                        <div class="card-body">
 
+                                                            <c:forEach var="video" items="${canalesVideo.listaVideos}">
+                                                                <div class="col-lg-4 col-md-6 mb-4">
+                                                                    <div class="card h-100">
+                                                                        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                                                                        <div class="card-body">
+                                                                            <h4 class="card-title">
+                                                                                <a href="#">${video.titulo}</a>
+                                                                            </h4>
+                                                                            <c:if test="${video.descripcion != '                                                    '}">
+                                                                                <p class="card-text">Descripcion: ${video.descripcion}</p>
+                                                                            </c:if>
+                                                                            <c:if test="${video.descripcion == '                                                    '}">
+                                                                                <p class="card-text">Este video no contiene descripción.</p>
+                                                                            </c:if>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </c:forEach>
+
+                                                            <c:if test="${canalesVideo.listaVideos.size() != 0}"></c:if>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <input type="hidden" name="idProgramacion" id="idProgramacion" value="${sessionScope.idProgramacion}"/>
+                                                            <button id="menu-navbar" class="navbar-toggler" type="button"
+                                                                    data-toggle="collapse" aria-controls="navbarResponsive"style="background-color: #ff4646;">
+                                                                <span class="fas fa-user-minus icon-white"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </header>
+                                </div>
+                            </c:if>
+                        </c:forEach>
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
                                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
@@ -157,7 +193,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
                                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
@@ -226,8 +262,8 @@
         </footer>
 
         <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../vendor/jquery/jquery.min.js"></script>
+        <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     </body>
     <script>

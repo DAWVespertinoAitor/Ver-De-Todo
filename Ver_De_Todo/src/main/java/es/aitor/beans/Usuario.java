@@ -30,19 +30,25 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="idUsuario")
     private int idUsuario;
+    
     @Column(name="nombreReal")
     private String nombreReal;
+    
     @Column(name="apellido1")
     private String apellido1;
+    
     @Column(name="apellido2")
     private String apellido2;
+    
     @Column(name="correoElectronico")
     private String correoElectronico;
+    
     @Column(name="password")
     private String password;
     
     @Column(name="nombreCanal", length=80)
     private String nombreCanal;
+    
     @Column(name="numSuscriptores")
     private int numSuscriptores;
     
@@ -58,24 +64,16 @@ public class Usuario implements Serializable {
     @JoinColumn(name="idUsuario")
     private List <Pelicula> listaPeliculas;
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.LAZY)
-    @JoinColumn(name="idUsuario")
-    @IndexColumn(name="orden")
-    private List<Programacion> listaProgramaciones;
+//    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.LAZY)
+//    @JoinColumn(name="idUsuario")
+//    private List<Programacion> listaProgramaciones;
     
     @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.LAZY)
     @JoinColumn(name="idUsuario")
-    @IndexColumn(name="orden")
     private List<Serie> listaSeries;
     
-//    @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.EAGER)
-//    @JoinColumn(name="idUsuario")
-//    @IndexColumn(name="orden")
-//    private List<Suscriptor> listaSuscriptores;
-    
     @OneToMany(cascade = {CascadeType.ALL}, fetch=FetchType.LAZY)
     @JoinColumn(name="idUsuario")
-    @IndexColumn(name="orden")
     private List<Video> listaVideos;
     
     public Usuario() {
@@ -92,9 +90,7 @@ public class Usuario implements Serializable {
         this.numSuscriptores = numSuscriptores;
     }
     
-    
-
-    public Usuario(int idUsuario, String nombreReal, String apellido1, String apellido2, String correoElectronico, String password, String nombreCanal, int numSuscriptores, List<Suscriptor> listaSuscriptores, List<Pelicula> listaPeliculas, List<Programacion> listaProgramaciones, List<Serie> listaSeries, List<Video> listaVideos) {
+    public Usuario(int idUsuario, String nombreReal, String apellido1, String apellido2, String correoElectronico, String password, String nombreCanal, int numSuscriptores, List<Suscriptor> listaSuscriptores, List<Pelicula> listaPeliculas, /*List<Programacion> listaProgramaciones,*/ List<Serie> listaSeries, List<Video> listaVideos) {
         this.idUsuario = idUsuario;
         this.nombreReal = nombreReal;
         this.apellido1 = apellido1;
@@ -105,7 +101,7 @@ public class Usuario implements Serializable {
         this.numSuscriptores = numSuscriptores;
         this.listaSuscriptores = listaSuscriptores;
         this.listaPeliculas = listaPeliculas;
-        this.listaProgramaciones = listaProgramaciones;
+//        this.listaProgramaciones = listaProgramaciones;
         this.listaSeries = listaSeries;
         this.listaVideos = listaVideos;
     }
@@ -190,13 +186,13 @@ public class Usuario implements Serializable {
         this.listaPeliculas = listaPeliculas;
     }
 
-    public List<Programacion> getListaProgramaciones() {
-        return listaProgramaciones;
-    }
-
-    public void setListaProgramaciones(List<Programacion> listaProgramaciones) {
-        this.listaProgramaciones = listaProgramaciones;
-    }
+//    public List<Programacion> getListaProgramaciones() {
+//        return listaProgramaciones;
+//    }
+//
+//    public void setListaProgramaciones(List<Programacion> listaProgramaciones) {
+//        this.listaProgramaciones = listaProgramaciones;
+//    }
 
     public List<Serie> getListaSeries() {
         return listaSeries;
@@ -206,13 +202,6 @@ public class Usuario implements Serializable {
         this.listaSeries = listaSeries;
     }
 
-//    public List<Suscriptor> getListaSuscriptores() {
-//        return listaSuscriptores;
-//    }
-//
-//    public void setListaSuscriptores(List<Suscriptor> listaSuscriptores) {
-//        this.listaSuscriptores = listaSuscriptores;
-//    }
 
     public List<Video> getListaVideos() {
         return listaVideos;

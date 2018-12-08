@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.Time;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ public class Programacion implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="idProgramacion")
-    private int idProgramación;
+    private int idProgramacion;
     
     @Column(name="fechaReproduccion")
     private Date fechaReproduccion;
@@ -33,54 +34,53 @@ public class Programacion implements Serializable {
     @Column(name="horaReproduccion")
     private Time horaReproduccion;
     
-    @ManyToOne
-    @JoinColumn(name = "idUsuario")
-    private Usuario usuario;
+//    @ManyToOne
+//    @JoinColumn(name = "idUsuario")
+    @Column(name="idUsuario")
+    private int usuario;
     
-    @OneToOne
-    @JoinColumn(name = "idVideo")
-    private Video idVideo;
+//    @OneToOne(fetch=FetchType.LAZY)
+//    @JoinColumn(name = "idPelicula")
+    @Column(name="idPelicula")
+    private int idPelicula;
     
-    @OneToOne
-    @JoinColumn(name = "idPelicula")
-    private Pelicula idPelicula;
-    
-    @OneToOne
-    @JoinColumn(name = "idSerie")
-    private Serie idSerie;
+//    @OneToOne(fetch=FetchType.LAZY)
+//    @JoinColumn(name = "idSerie")
+    @Column(name="idSerie")
+    private int idSerie;
 
     public Programacion() {
     }
 
-    public Programacion(int idProgramación, Date fechaReproduccion, Time horaReproduccion) {
-        this.idProgramación = idProgramación;
+    public Programacion(int idProgramacion, Date fechaReproduccion, Time horaReproduccion) {
+        this.idProgramacion = idProgramacion;
         this.fechaReproduccion = fechaReproduccion;
         this.horaReproduccion = horaReproduccion;
     }
-
-    public Programacion(int idProgramación, Date fechaReproduccion, Time horaReproduccion, Usuario usuario) {
-        this.idProgramación = idProgramación;
+    
+    public Programacion(int idProgramacion, Date fechaReproduccion, Time horaReproduccion, int idPelicula, int idSerie) {
+        this.idProgramacion = idProgramacion;
         this.fechaReproduccion = fechaReproduccion;
         this.horaReproduccion = horaReproduccion;
-        this.usuario = usuario;
-    }
-
-    public Programacion(int idProgramación, Date fechaReproduccion, Time horaReproduccion, Usuario usuario, Video idVideo, Pelicula idPelicula, Serie idSerie) {
-        this.idProgramación = idProgramación;
-        this.fechaReproduccion = fechaReproduccion;
-        this.horaReproduccion = horaReproduccion;
-        this.usuario = usuario;
-        this.idVideo = idVideo;
         this.idPelicula = idPelicula;
         this.idSerie = idSerie;
     }
 
-    public int getIdProgramación() {
-        return idProgramación;
+    public Programacion(int idProgramacion, Date fechaReproduccion, Time horaReproduccion, int usuario, int idPelicula, int idSerie) {
+        this.idProgramacion = idProgramacion;
+        this.fechaReproduccion = fechaReproduccion;
+        this.horaReproduccion = horaReproduccion;
+        this.usuario = usuario;
+        this.idPelicula = idPelicula;
+        this.idSerie = idSerie;
     }
 
-    public void setIdProgramación(int idProgramación) {
-        this.idProgramación = idProgramación;
+    public int getIdProgramacion() {
+        return idProgramacion;
+    }
+
+    public void setIdProgramacion(int idProgramacion) {
+        this.idProgramacion = idProgramacion;
     }
 
     public Date getFechaReproduccion() {
@@ -99,35 +99,27 @@ public class Programacion implements Serializable {
         this.horaReproduccion = horaReproduccion;
     }
 
-    public Usuario getUsuario() {
+    public int getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(int usuario) {
         this.usuario = usuario;
     }
 
-    public Video getIdVideo() {
-        return idVideo;
-    }
-
-    public void setIdVideo(Video idVideo) {
-        this.idVideo = idVideo;
-    }
-
-    public Pelicula getIdPelicula() {
+    public int getIdPelicula() {
         return idPelicula;
     }
 
-    public void setIdPelicula(Pelicula idPelicula) {
+    public void setIdPelicula(int idPelicula) {
         this.idPelicula = idPelicula;
     }
 
-    public Serie getIdSerie() {
+    public int getIdSerie() {
         return idSerie;
     }
 
-    public void setIdSerie(Serie idSerie) {
+    public void setIdSerie(int idSerie) {
         this.idSerie = idSerie;
     }
     

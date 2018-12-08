@@ -4,6 +4,7 @@
     Author     : aitor
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -170,10 +171,6 @@
                                                     <input type="text" class="form-control" placeholder="Hugh Jackman... Angeline Jolie" id="actores" name="actores">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="fechaDeSubida" class="text-uppercase">Fecha de Subida</label>
-                                                    <input type="date" class="form-control" placeholder="" id="fechaDeSubida" name="fechaDeSubida" value="${sessionScope.fechaDeSubida}" readonly>
-                                                </div>
-                                                <div class="form-group">
                                                     <label for="sinopsis" class="text-uppercase" style="width:100%;">Sinopsis</label>
                                                     <textarea name="sinopsis" id="sinopsis" style="width: 50%; height: 200px" required="required">
                                                     </textarea>
@@ -234,10 +231,6 @@
                                                         <li><input type="radio" name="subtitulos" value="I"/> Ingles</li>
                                                     </ol>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="fechaDeSubida" class="text-uppercase">Fecha de Subida</label>
-                                                    <input type="date" class="form-control" placeholder="" id="fechaDeSubida" name="fechaDeSubida" value="${sessionScope.fechaDeSubida}" readonly>
-                                                </div>
                                                 <hr style="background-color: #ced4da;">
                                                 <div class="form-group">
                                                     <label for="estreno" class="text-uppercase" style="width:100%;">Descripcion (opcional)</label>
@@ -280,10 +273,6 @@
                                                     <label for="descripcion" class="text-uppercase" style="width:100%;">Descripcion</label>
                                                     <textarea name="descripcion" id="descripcion" style="width: 50%; height: 200px">
                                                     </textarea>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="fechaDeSubida" class="text-uppercase">Fecha de Subida</label>
-                                                    <input type="date" class="form-control" placeholder="" id="fechaDeSubida" name="fechaDeSubida" value="${sessionScope.fechaDeSubida}" readonly>
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="file" name="archivo" id="archivoVideo" accept="video/*" required/>

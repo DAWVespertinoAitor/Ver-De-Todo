@@ -6,7 +6,7 @@
 package es.aitor.beans;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +35,7 @@ public class Video implements Serializable {
     private String nombreArchivo;
     
     @Column(name="fechaDeSubida")
-    private Date fechaDeSubida;
+    private Timestamp fechaDeSubida;
     
     @ManyToOne
     @JoinColumn(name = "idUsuario")
@@ -44,7 +44,7 @@ public class Video implements Serializable {
     public Video() {
     }
 
-    public Video(int idVideo, String titulo, String descripcion, String nombreArchivo, Date fechaDeSubida) {
+    public Video(int idVideo, String titulo, String descripcion, String nombreArchivo, Timestamp fechaDeSubida) {
         this.idVideo = idVideo;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -52,7 +52,7 @@ public class Video implements Serializable {
         this.fechaDeSubida = fechaDeSubida;
     }
 
-    public Video(int idVideo, String titulo, String descripcion, String nombreArchivo, Date fechaDeSubida, Usuario usuario) {
+    public Video(int idVideo, String titulo, String descripcion, String nombreArchivo, Timestamp fechaDeSubida, Usuario usuario) {
         this.idVideo = idVideo;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -101,11 +101,11 @@ public class Video implements Serializable {
         this.usuario = usuario;
     }
     
-    public Date getFechaDeSubida() {
+    public Timestamp getFechaDeSubida() {
         return fechaDeSubida;
     }
 
-    public void setFechaDeSubida(Date fechaDeSubida) {
+    public void setFechaDeSubida(Timestamp fechaDeSubida) {
         this.fechaDeSubida = fechaDeSubida;
     }
 

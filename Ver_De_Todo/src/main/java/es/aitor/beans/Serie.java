@@ -6,7 +6,7 @@
 package es.aitor.beans;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,7 +38,7 @@ public class Serie implements Serializable {
     private String nombreArchivo;
     private String descripcion;
     @Column(name="fechaDeSubida")
-    private Date fechaDeSubida;
+    private Timestamp fechaDeSubida;
     
     @ManyToOne
     @JoinColumn(name = "idUsuario")
@@ -47,7 +47,7 @@ public class Serie implements Serializable {
     public Serie() {
     }
 
-    public Serie(int idSerie, String tituloSerie, String temporada, String tituloCapitulo, int numCapitulo, String idioma, char subtitulos, String nombreArchivo, String descripcion, Date fechaDeSubida) {
+    public Serie(int idSerie, String tituloSerie, String temporada, String tituloCapitulo, int numCapitulo, String idioma, char subtitulos, String nombreArchivo, String descripcion, Timestamp fechaDeSubida) {
         this.idSerie = idSerie;
         this.tituloSerie = tituloSerie;
         this.temporada = temporada;
@@ -60,7 +60,7 @@ public class Serie implements Serializable {
         this.fechaDeSubida = fechaDeSubida;
     }
 
-    public Serie(int idSerie, String tituloSerie, String temporada, String tituloCapitulo, int numCapitulo, String idioma, char subtitulos, String nombreArchivo, String descripcion, Date fechaDeSubida, Usuario usuario) {
+    public Serie(int idSerie, String tituloSerie, String temporada, String tituloCapitulo, int numCapitulo, String idioma, char subtitulos, String nombreArchivo, String descripcion, Timestamp fechaDeSubida, Usuario usuario) {
         this.idSerie = idSerie;
         this.tituloSerie = tituloSerie;
         this.temporada = temporada;
@@ -154,11 +154,11 @@ public class Serie implements Serializable {
         this.usuario = usuario;
     }
 
-    public Date getFechaDeSubida() {
+    public Timestamp getFechaDeSubida() {
         return fechaDeSubida;
     }
 
-    public void setFechaDeSubida(Date fechaDeSubida) {
+    public void setFechaDeSubida(Timestamp fechaDeSubida) {
         this.fechaDeSubida = fechaDeSubida;
     }
 

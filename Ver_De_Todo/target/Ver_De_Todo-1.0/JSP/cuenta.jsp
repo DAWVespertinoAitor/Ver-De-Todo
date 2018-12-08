@@ -25,11 +25,11 @@
         <link href="../CSS/index.css" rel="stylesheet">
 
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
-        
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
-    
+
     <style>
         .scrollbar {
             float: left;
@@ -63,22 +63,22 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="./inicio.jsp">Inicio</a>
+                            <a class="nav-link" href="../Controlador?direccion=inicio">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./videos.jsp">Videos</a>
+                            <a class="nav-link" href="../Controlador?direccion=videos">Videos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./series.jsp">Series</a>
+                            <a class="nav-link" href="../Controlador?direccion=series">Series</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./peliculas.jsp">Peliculas</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="./cuenta.jsp">Cuenta</a>
+                            <a class="nav-link" href="../Controlador?direccion=peliculas">Peliculas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./subirArchivo.jsp">Subir archivo</a>
+                            <a class="nav-link active" href="../Controlador?direccion=cuenta">Cuenta</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../Controlador?direccion=subirArchivo">Subir archivo</a>
                         </li>
                     </ul>
                 </div>
@@ -197,7 +197,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
                                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
@@ -266,8 +266,8 @@
         </footer>
 
         <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../vendor/jquery/jquery.min.js"></script>
+        <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     </body>
     <script>

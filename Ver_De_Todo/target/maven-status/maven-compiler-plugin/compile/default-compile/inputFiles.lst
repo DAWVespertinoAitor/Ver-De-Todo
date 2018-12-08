@@ -1,3 +1,4 @@
+C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\controllers\Controlador.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\beans\Pelicula.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\beans\Video.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\dao\GenericoDAO.java
@@ -7,12 +8,13 @@ C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\beans\Us
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\beans\Programacion.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\beans\Suscriptor.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\controllers\SubirArchivo.java
+C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\controllers\EditarProg.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\daofactory\DAOFactory.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\controllers\Login.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\persistencia\HibernateUtil.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\controllers\Buscador.java
-C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\controllers\Suscripciones.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\controllers\RegistroAjax.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\dao\IGenericoDAO.java
+C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\controllers\SuscripcionYProg.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\beans\Serie.java
 C:\Users\aitor\Documents\Ver-De-Todo\Ver_De_Todo\src\main\java\es\aitor\daofactory\MySQLDAOFactory.java

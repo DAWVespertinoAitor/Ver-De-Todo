@@ -6,16 +6,26 @@
 package es.aitor.controllers;
 
 import es.aitor.beans.Canal;
+import es.aitor.beans.Pelicula;
+import es.aitor.beans.Programacion;
+import es.aitor.beans.Serie;
 import es.aitor.beans.Suscriptor;
 import es.aitor.beans.Usuario;
+import es.aitor.beans.Video;
 import es.aitor.dao.IGenericoDAO;
 import es.aitor.daofactory.DAOFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -46,7 +56,7 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
         HttpSession sesion = request.getSession(true);
 
         String url = null;
@@ -80,22 +90,39 @@ public class Login extends HttpServlet {
                     request.setAttribute("datosErroneos", true);
                     request.setAttribute("email", emailLogin);
                 } else {
-                    System.out.println("Esta es la ruta "+request.getContextPath());
-                    
+                    System.out.println("Esta es la ruta " + request.getContextPath());
+
                     url = "./JSP/inicio.jsp";
-                    
+
                     //Recojo los canales a los que esta suscrito
                     List<Suscriptor> listaSuscripciones = null;
                     List<Usuario> listaCanales = new ArrayList();
+//                    List<Usuario> listaCanalesFinal = new ArrayList();
+
+                    Pelicula pelicula = new Pelicula();
+                    Serie serie = new Serie();
+                    Video video = new Video();
+
                     listaSuscripciones = (List<Suscriptor>) gdao.getMisSuscripciones(usuarioLogin2.getIdUsuario());
                     for (int i = 0; i < listaSuscripciones.size(); i++) {
                         Usuario usuarioRecuperado = (Usuario) gdao.getOne((Serializable) listaSuscripciones.get(i).getIdUsuario(), Usuario.class);
                         listaCanales.add(usuarioRecuperado);
+//                        listaCanalesFinal.add(usuarioRecuperado);
                     }
-
+                    
+                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    LocalDate ahora = LocalDate.now();
+                    System.out.println("-----------------------------");
+//                    Date hoy = new Date(ahora.getYear(), ahora.now().getMonthValue(), ahora.now().getDayOfMonth());
+                    String fechaHoy = "2018-"+String.valueOf(ahora.getMonthValue())+"-"+String.valueOf(ahora.getDayOfMonth());
+                    List<Programacion> listaProgramacion = gdao.getProgramacion(usuarioLogin2.getIdUsuario(), fechaHoy);
+                   
                     //Meto el usuario en sesion
                     sesion.setAttribute("usuario", usuarioLogin2);
 
+                    //Meto la programacion en sesion
+                    sesion.setAttribute("programacion", listaProgramacion);
+                    
                     //Meto los canales en sesion
                     sesion.setAttribute("canales", listaCanales);
                 }
@@ -124,7 +151,7 @@ public class Login extends HttpServlet {
 
                 break;
         }
-        System.out.println("Que direccion llevo "+url);
+        System.out.println("Que direccion llevo " + url);
         response.sendRedirect(url);
 //        request.getRequestDispatcher(url).forward(request, response);
     }

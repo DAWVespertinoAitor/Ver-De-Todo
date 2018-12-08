@@ -5,10 +5,28 @@
  */
 package es.aitor.controllers;
 
+import es.aitor.beans.Pelicula;
+import es.aitor.beans.Programacion;
+import es.aitor.beans.Serie;
+import es.aitor.beans.Usuario;
+import es.aitor.beans.Video;
+import es.aitor.dao.IGenericoDAO;
+import es.aitor.daofactory.DAOFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import static java.time.format.DateTimeFormatter.ISO_INSTANT;
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,9 +53,16 @@ public class Controlador extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+
         String direccion = request.getParameter("direccion");
         HttpSession sesion = request.getSession(true);
         String url = null;
+
+        DAOFactory daof = DAOFactory.getDAOFactory();
+        IGenericoDAO gdao = daof.getGenericoDAO();
+
+        List<Usuario> listaCanales = (List<Usuario>) sesion.getAttribute("canales");
 
         switch (direccion) {
             case "inicio":
@@ -45,24 +70,51 @@ public class Controlador extends HttpServlet {
                 break;
             case "videos":
                 url = "JSP/videos.jsp";
+
+                for (int i = 0; i < listaCanales.size(); i++) {
+                    System.out.println("Estoy entrando");
+                    List<Video> listaVideo = (List<Video>) gdao.getVideos(listaCanales.get(i).getIdUsuario());
+                    listaCanales.get(i).setListaVideos(listaVideo);
+                }
+                sesion.setAttribute("canales", listaCanales);
                 break;
             case "series":
                 url = "JSP/series.jsp";
+                for (int i = 0; i < listaCanales.size(); i++) {
+                    List<Serie> listaSerie = (List<Serie>) gdao.getSeries(listaCanales.get(i).getIdUsuario());
+                    listaCanales.get(i).setListaSeries(listaSerie);
+                }
+                sesion.setAttribute("canales", listaCanales);
                 break;
             case "peliculas":
                 url = "JSP/peliculas.jsp";
+                for (int i = 0; i < listaCanales.size(); i++) {
+                    System.out.println("ENTRO?");
+                    List<Pelicula> listaPelicula = (List<Pelicula>) gdao.getPeliculas(listaCanales.get(i).getIdUsuario());
+                    listaCanales.get(i).setListaPeliculas(listaPelicula);
+                }
+                sesion.setAttribute("canales", listaCanales);
                 break;
             case "cuenta":
                 url = "JSP/cuenta.jsp";
                 break;
             case "subirArchivo":
-                if (sesion.getAttribute("fechaDeSubida") == null) {
-                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                    LocalDate ahora = LocalDate.now();
-                    ahora.format(fmt);
-                    sesion.setAttribute("fechaDeSubida", ahora);
-                }
                 url = "JSP/subirArchivo.jsp";
+                break;
+            case "editarProgramacion":
+                int idProgramacionEd = Integer.parseInt(request.getParameter("idProgramacion"));
+                Programacion programacion = (Programacion) gdao.getOne(idProgramacionEd, Programacion.class);
+                sesion.setAttribute("idProgramacion", idProgramacionEd);
+                sesion.setAttribute("fechaRepro", programacion.getFechaReproduccion());
+                sesion.setAttribute("horaRepro", programacion.getHoraReproduccion());
+                url = "JSP/editarProgramacion.jsp";
+                break;
+            case "addProgramacion":
+                int idArchivo = Integer.parseInt(request.getParameter("idArchivo"));
+                String tipoArchivo = request.getParameter("tipoArchivo");
+                sesion.setAttribute("idArchivo", idArchivo);
+                sesion.setAttribute("archivoSeriePelicula", tipoArchivo);
+                url = "JSP/anadirProgramacion.jsp";
                 break;
         }
         response.sendRedirect(url);

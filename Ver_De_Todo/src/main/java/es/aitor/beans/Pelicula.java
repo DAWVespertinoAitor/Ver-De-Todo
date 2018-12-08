@@ -6,7 +6,7 @@
 package es.aitor.beans;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +29,7 @@ public class Pelicula implements Serializable {
     private String titulo;
     
     @Column(name="fechaDeSubida")
-    private Date fechaDeSubida;
+    private Timestamp fechaDeSubida;
     
     @Column(name="genero", length=30)
     private String genero;
@@ -59,7 +59,7 @@ public class Pelicula implements Serializable {
     public Pelicula() {
     }
 
-    public Pelicula(int idPelicula, String titulo, Date fechaDeSubida, String genero, String pais, String director, String sinopsis, String actores, String nombreArchivo, char subtitulos) {
+    public Pelicula(int idPelicula, String titulo, Timestamp fechaDeSubida, String genero, String pais, String director, String sinopsis, String actores, String nombreArchivo, char subtitulos) {
         this.idPelicula = idPelicula;
         this.titulo = titulo;
         this.fechaDeSubida = fechaDeSubida;
@@ -72,7 +72,7 @@ public class Pelicula implements Serializable {
         this.subtitulos = subtitulos;
     }
     
-    public Pelicula(int idPelicula, String titulo, Date fechaDeSubida, String genero, String pais, String director, String sinopsis, String actores, String nombreArchivo, char subtitulos, Usuario usuario) {
+    public Pelicula(int idPelicula, String titulo, Timestamp fechaDeSubida, String genero, String pais, String director, String sinopsis, String actores, String nombreArchivo, char subtitulos, Usuario usuario) {
         this.idPelicula = idPelicula;
         this.titulo = titulo;
         this.fechaDeSubida = fechaDeSubida;
@@ -110,11 +110,11 @@ public class Pelicula implements Serializable {
         this.titulo = titulo;
     }
 
-    public Date getFechaDeSubida() {
+    public Timestamp getFechaDeSubida() {
         return fechaDeSubida;
     }
 
-    public void setFechaDeSubida(Date fechaDeSubida) {
+    public void setFechaDeSubida(Timestamp fechaDeSubida) {
         this.fechaDeSubida = fechaDeSubida;
     }
 

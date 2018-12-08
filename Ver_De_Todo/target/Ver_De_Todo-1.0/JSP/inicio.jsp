@@ -46,23 +46,23 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="./inicio.jsp">Inicio</a>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="../Controlador?direccion=inicio">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./videos.jsp">Videos</a>
+                            <a class="nav-link" href="../Controlador?direccion=videos">Videos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./series.jsp">Series</a>
+                            <a class="nav-link" href="../Controlador?direccion=series">Series</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./peliculas.jsp">Peliculas</a>
+                            <a class="nav-link" href="../Controlador?direccion=peliculas">Peliculas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./cuenta.jsp">Cuenta</a>
+                            <a class="nav-link" href="../Controlador?direccion=cuenta">Cuenta</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./subirArchivo.jsp">Subir archivo</a>
+                            <a class="nav-link" href="../Controlador?direccion=subirArchivo">Subir archivo</a>
                         </li>
                     </ul>
                 </div>
@@ -111,107 +111,56 @@
                     </div>
 
                     <div class="row">
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <small class="text-muted">Pelicula</small>
-
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                                </div>
-                                <div class="card-footer">
-                                    <button id="menu-navbar" class="navbar-toggler" type="button"
-                                            data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #069d02;">
-                                        <span class="fas fa-user-plus icon-white"></span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Serie</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Video</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Pelicula</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Serie</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Video</small>
-                                </div>
-                            </div>
-                        </div>
+                        <table class="table" style="margin-left: 10px;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Dia de reproduccion</th>
+                                    <th scope="col">Hora de reproduccion</th>
+                                    <th scope="col">Contendio</th>
+                                    <th scope="col">Editar/Borrar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>02/08/2018</td>
+                                    <td>17:00</td>
+                                    <td>Pelicula</td>
+                                </tr>
+                                <tr>
+                                    <td>03/08/2018</td>
+                                    <td>19:00</td>
+                                    <td>Serie</td>
+                                </tr>
+                                <tr>
+                                    <td>04/08/2018</td>
+                                    <td>21:00</td>
+                                    <td>Serie</td>
+                                </tr>
+                                <c:forEach var="contenido" items="${sessionScope.programacion}">
+                                    <tr id="${contenido.idProgramacion}">
+                                        <td><c:out value="${contenido.fechaReproduccion}"/></td>
+                                        <td><c:out value="${contenido.horaReproduccion}"/></td>
+                                        <c:if test="${contenido.idPelicula != 0}">
+                                            <td>Pelicula</td>
+                                        </c:if>
+                                        <c:if test="${contenido.idSerie != 0}">
+                                            <td>Serie</td>
+                                        </c:if>
+                                <form action="../Controlador" method="POST">
+                                    <td>
+                                        <input type="hidden" name="idProgramacion" id="idProgramacion" value="${contenido.idProgramacion}"/>
+                                        <button id="menu-canales" class="navbar-toggler" type="submit" name="direccion" value="editarProgramacion">
+                                            <span class="fas fa-calendar-plus" style="color: green;"></span>
+                                        </button>
+                                        <button id="menu-canales" class="navbar-toggler" type="button" onclick="eliminarProgramacion(${contenido.idProgramacion})">
+                                            <span class="fas fa-calendar-times" style="color: red;"></span>
+                                        </button>
+                                    </td>
+                                </form>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
                     </div>
                     <!-- /.row -->
 
@@ -235,6 +184,8 @@
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="../JS/codigo.js"></script>
+        <script type="text/javascript" src="../JS/borrarProgramacion.js"></script>
 
     </body>
     <script>

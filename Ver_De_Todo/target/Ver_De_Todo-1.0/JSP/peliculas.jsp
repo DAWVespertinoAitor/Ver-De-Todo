@@ -28,6 +28,10 @@
         <link href="../CSS/shop-homepage.css" rel="stylesheet">
         <link href="../CSS/index.css" rel="stylesheet">
 
+        <!--Font awesome-->
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+
+
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -47,22 +51,22 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="./inicio.jsp">Inicio</a>
+                            <a class="nav-link" href="../Controlador?direccion=inicio">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./videos.jsp">Videos</a>
+                            <a class="nav-link" href="../Controlador?direccion=videos">Videos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./series.jsp">Series</a>
+                            <a class="nav-link" href="../Controlador?direccion=series">Series</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="./peliculas.jsp">Peliculas</a>
+                            <a class="nav-link" href="../Controlador?direccion=peliculas">Peliculas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./cuenta.jsp">Cuenta</a>
+                            <a class="nav-link" href="../Controlador?direccion=cuenta">Cuenta</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./subirArchivo.jsp">Subir archivo</a>
+                            <a class="nav-link" href="../Controlador?direccion=subirArchivo">Subir archivo</a>
                         </li>
                     </ul>
                 </div>
@@ -112,7 +116,62 @@
                     </div>
 
                     <div class="row">
+                        <c:forEach var="canalesPelicula" items="${sessionScope.canales}">
+                            <c:if test="${canalesPelicula.listaPeliculas.size() != 0}">
+                                <div class="col-lg-12 my-4 container2" style=" padding-right: 0;">
+                                    <div class="carousel-inner" role="listbox">
+                                        <!-- Slide One - Set the background image for this slide in the line below -->
+                                        <div class="carousel-item signin1 active scrollbar scrollbar-primary">
+                                            <div class="card h-100 col-lg-12" style="padding: 0 0;">
+                                                <div class="card-header">
+                                                    <h5>Ultimo contenido de ${canalesPelicula.nombreCanal}</h5>
+                                                </div>
+                                                <div class="card-body">
 
+                                                    <c:forEach var="pelicula" items="${canalesPelicula.listaPeliculas}">
+                                                        <div class="col-lg-4 mb-4" style="float:left;">
+                                                            <div class="card h-100">
+                                                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                                                                <div class="card-body" style="min-height: 170px; max-height: 170px;">
+                                                                    <h4 class="card-title">
+                                                                        <a href="#">${pelicula.titulo}</a>
+                                                                    </h4>
+                                                                    <c:if test="${pelicula.sinopsis != '                                                    '}">
+                                                                        <p class="card-text">Descripcion: ${video.descripcion}</p>
+                                                                    </c:if>
+                                                                    <c:if test="${video.sinopsis == '                                                    '}">
+                                                                        <p class="card-text">Este video no contiene descripción.</p>
+                                                                    </c:if>
+                                                                </div>
+                                                                <form action="../Controlador" method="post">
+                                                                    <div class="card-footer">
+                                                                        <input type="hidden" name="direccion" value="addProgramacion"/>
+                                                                        <input type="hidden" name="tipoArchivo" value="pelicula"/>
+                                                                        <input type="hidden" name="idArchivo" value="${pelicula.idPelicula}"/>
+                                                                        <button id="menu-navbar" class="navbar-toggler" type="submit" style="background-color: #069d02;">
+                                                                            <span class="fas fa-calendar-alt icon-white"></span>
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </c:forEach>
+
+                                                    <c:if test="${canalesVideo.listaVideos.size() != 0}"></c:if>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <input type="hidden" name="idProgramacion" id="idProgramacion" value="${sessionScope.idProgramacion}"/>
+                                                    <button id="menu-navbar" class="navbar-toggler" type="button"
+                                                            data-toggle="collapse" aria-controls="navbarResponsive"style="background-color: #ff4646;">
+                                                        <span class="fas fa-user-minus icon-white"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
+                        </c:forEach>
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
                                 <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
@@ -234,8 +293,8 @@
         </footer>
 
         <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../vendor/jquery/jquery.min.js"></script>
+        <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     </body>
     <script>

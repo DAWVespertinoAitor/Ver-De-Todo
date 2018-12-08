@@ -5,7 +5,9 @@
  */
 package es.aitor.dao;
 
+import es.aitor.beans.Programacion;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -26,5 +28,6 @@ public interface IGenericoDAO<T> {
     public <T> List<T> getPeliculas(int canal);
     public <T> List<T> getSeries(int canal);
     public <T> List<T> getVideos(int canal);
+    public List<Programacion> getProgramacion(int canal, String fechaReproduccion);
     
 }

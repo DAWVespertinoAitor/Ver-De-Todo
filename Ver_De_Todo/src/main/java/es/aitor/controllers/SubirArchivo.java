@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
@@ -74,12 +75,15 @@ public class SubirArchivo extends HttpServlet {
         File uploads = new File(path); //Carpeta donde se guardan los archivos
         uploads.mkdirs(); //Crea los directorios necesarios
         File file = null;
-
+        Timestamp fechaDeSubida = null;
         switch (tipoArchivo) {
             case "pelicula":
                 codigo = "pelicula";
                 try {
+                    fechaDeSubida = new Timestamp(System.currentTimeMillis());
+                    pelicula.setFechaDeSubida(fechaDeSubida);
                     BeanUtils.populate(pelicula, request.getParameterMap());
+
                 } catch (IllegalAccessException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InvocationTargetException ex) {
@@ -99,6 +103,8 @@ public class SubirArchivo extends HttpServlet {
             case "serie":
                 codigo = "serie";
                 try {
+                    fechaDeSubida = new Timestamp(System.currentTimeMillis());
+                    pelicula.setFechaDeSubida(fechaDeSubida);
                     BeanUtils.populate(serie, request.getParameterMap());
                 } catch (IllegalAccessException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -119,6 +125,8 @@ public class SubirArchivo extends HttpServlet {
             case "video":
                 codigo = "video";
                 try {
+                    fechaDeSubida = new Timestamp(System.currentTimeMillis());
+                    pelicula.setFechaDeSubida(fechaDeSubida);
                     BeanUtils.populate(video, request.getParameterMap());
                 } catch (IllegalAccessException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -152,7 +160,7 @@ public class SubirArchivo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**

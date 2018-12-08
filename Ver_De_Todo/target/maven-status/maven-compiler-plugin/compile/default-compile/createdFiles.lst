@@ -3,9 +3,9 @@ es\aitor\controllers\Buscador.class
 es\aitor\beans\Serie.class
 es\aitor\daofactory\DAOFactory.class
 es\aitor\beans\Programacion.class
+es\aitor\controllers\EditarProg.class
 es\aitor\controllers\Login.class
 es\aitor\context\Context.class
-es\aitor\controllers\Suscripciones.class
 es\aitor\beans\Suscriptor.class
 es\aitor\daofactory\MySQLDAOFactory.class
 es\aitor\dao\IGenericoDAO.class
@@ -13,6 +13,8 @@ es\aitor\beans\Usuario.class
 es\aitor\beans\Video.class
 es\aitor\dao\GenericoDAO.class
 es\aitor\beans\Pelicula.class
+es\aitor\controllers\Controlador.class
 es\aitor\controllers\RegistroAjax.class
+es\aitor\controllers\SuscripcionYProg.class
 es\aitor\controllers\SubirArchivo.class
 es\aitor\persistencia\HibernateUtil.class
