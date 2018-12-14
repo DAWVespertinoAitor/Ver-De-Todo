@@ -5,7 +5,6 @@
  */
 package es.aitor.controllers;
 
-import es.aitor.beans.Canal;
 import es.aitor.beans.Usuario;
 import es.aitor.dao.IGenericoDAO;
 import es.aitor.daofactory.DAOFactory;

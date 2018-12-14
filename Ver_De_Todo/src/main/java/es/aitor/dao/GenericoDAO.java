@@ -5,14 +5,12 @@
  */
 package es.aitor.dao;
 
-import es.aitor.beans.Canal;
 import es.aitor.beans.Pelicula;
 import es.aitor.beans.Programacion;
 import es.aitor.beans.Serie;
 import es.aitor.beans.Suscriptor;
 import es.aitor.beans.Usuario;
 import es.aitor.beans.Video;
-import es.aitor.context.Context;
 import es.aitor.persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.sql.Date;
@@ -35,7 +33,6 @@ import org.hibernate.transform.Transformers;
  */
 public class GenericoDAO<T> implements IGenericoDAO<T> {
 
-    private static final Logger LOG = Logger.getLogger(Context.class.getName());
     private Session sesion;
 
     private void startTransaction() {

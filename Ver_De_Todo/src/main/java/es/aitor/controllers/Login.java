@@ -5,7 +5,6 @@
  */
 package es.aitor.controllers;
 
-import es.aitor.beans.Canal;
 import es.aitor.beans.Pelicula;
 import es.aitor.beans.Programacion;
 import es.aitor.beans.Serie;
