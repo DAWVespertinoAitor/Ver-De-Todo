@@ -6,6 +6,7 @@
 package es.aitor.controllers;
 
 import es.aitor.beans.Programacion;
+import es.aitor.beans.Suscriptor;
 import es.aitor.beans.Usuario;
 import es.aitor.dao.IGenericoDAO;
 import es.aitor.daofactory.DAOFactory;
@@ -15,6 +16,8 @@ import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -89,6 +92,8 @@ public class SuscripcionYProg extends HttpServlet {
                 url = "JSP/inicio.jsp";
                 break;
         }
+        Collections.sort(listaProgramacion);
+        sesion.setAttribute("programacion", listaProgramacion);
         response.sendRedirect(url);
     }
 
@@ -104,7 +109,58 @@ public class SuscripcionYProg extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        HttpSession sesion = request.getSession(true);
+
+        DAOFactory daof = DAOFactory.getDAOFactory();
+        IGenericoDAO gdao = daof.getGenericoDAO();
+        
+        PrintWriter out = response.getWriter();
+        
+        Suscriptor suscriptor = new Suscriptor();
+        String accion = request.getParameter("accion");
+        int idCanal = Integer.valueOf(request.getParameter("idUser"));
+        
+        Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+        
+        System.out.println("Que id me traigo? "+idCanal);
+        suscriptor.setIdUsuarioSuscriptor(usuario.getIdUsuario());
+        suscriptor.setIdUsuario(idCanal);
+        
+        List<Usuario> listaCanales = (List<Usuario>) sesion.getAttribute("canales");
+        List<Usuario> listaCanalesNoSus = (List<Usuario>) sesion.getAttribute("canalesNoSuscritos");
+        
+        switch(accion){
+            case "add":
+                for(int i = 0;i<listaCanalesNoSus.size();i++){
+                    if(listaCanalesNoSus.get(i).getIdUsuario() == idCanal){
+                        listaCanales.add(listaCanalesNoSus.get(i));
+                        listaCanalesNoSus.remove(i);
+                    }
+                }
+                sesion.setAttribute("canales", listaCanales);
+                sesion.setAttribute("canalesNoSuscritos", listaCanalesNoSus);
+                gdao.insertUpdate(suscriptor);
+                break;
+            case "del":
+                List<Suscriptor> listaSuscripciones = (List<Suscriptor>) gdao.getMisSuscripciones(usuario.getIdUsuario());
+                for(int i= 0;i<listaSuscripciones.size();i++){
+                    if(listaSuscripciones.get(i).getIdUsuario() == suscriptor.getIdUsuario() || listaSuscripciones.get(i).getIdUsuarioSuscriptor() == suscriptor.getIdUsuarioSuscriptor()){
+                        suscriptor.setIdSuscriptor(listaSuscripciones.get(i).getIdSuscriptor());
+                    }
+                }
+                for(int i = 0;i<listaCanales.size();i++){
+                    if(listaCanales.get(i).getIdUsuario() == idCanal){
+                        listaCanalesNoSus.add(listaCanales.get(i));
+                        listaCanales.remove(i);
+                    }
+                }
+                sesion.setAttribute("canales", listaCanales);
+                sesion.setAttribute("canalesNoSuscritos", listaCanalesNoSus);
+                gdao.delete(suscriptor);
+                break;
+        }
+        
     }
 
     /**

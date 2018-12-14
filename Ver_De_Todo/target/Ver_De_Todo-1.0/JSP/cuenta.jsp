@@ -4,6 +4,7 @@
     Author     : aitor
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,32 +24,13 @@
         <!-- Custom styles for this template -->
         <link href="../CSS/shop-homepage.css" rel="stylesheet">
         <link href="../CSS/index.css" rel="stylesheet">
+        <link href="../CSS/scroll.css" rel="stylesheet">
 
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
-
-    <style>
-        .scrollbar {
-            float: left;
-            width: 100%;
-            background: #fff;
-            overflow-y: scroll;
-        }
-
-        .scrollbar-primary::-webkit-scrollbar {
-            width: 5px;
-            background-color: #F5F5F5; 
-        }
-
-        .scrollbar-primary::-webkit-scrollbar-thumb {
-            border-radius: 5px;
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-            background-color: #069302; 
-        }
-    </style>
     <body class="scrollbar scrollbar-primary">
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -74,8 +56,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="../Controlador?direccion=peliculas">Peliculas</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="../Controlador?direccion=cuenta">Cuenta</a>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="../Controlador?direccion=miCuenta">Cuenta</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../Controlador?direccion=subirArchivo">Subir archivo</a>
@@ -90,159 +72,27 @@
 
             <div class="row">
                 <div class="col-lg-3 menu scrollbar scrollbar-primary">
+                    <h4 class="card-title">Suscripciones</h4>
                     <div class="list-group collapse">
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
-                        <a href="#" class="list-group-item">Canal 1</a>
-                        <a href="#" class="list-group-item">Canal 2</a>
-                        <a href="#" class="list-group-item">Canal 3</a>
+                        <c:forEach var="canales" items="${sessionScope.canales}">
+                            <a href="../Controlador?direccion=verCanal&idVerCanal=${canales.idUsuario}" class="list-group-item"><c:out value="${canales.nombreCanal}"/></a>
+                        </c:forEach>
+                        <c:if test="${sessionScope.canales.size() == 0}">
+                            <div class="list-group-item">No tienes ninguna suscripcion.</div>
+                        </c:if>
                     </div>
 
                 </div>
                 <!-- /.col-lg-3 -->
                 <div class="col-lg-9">
-
-                    <div id="carouselExampleIndicators" class="carousel /*slide*/ my-4" data-ride="carousel">
-                        <!--<ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        </ol>-->
-                        <div class="carousel-inner" role="listbox">
-                            <div class="carousel-item active">
-                                <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
-                            </div>
-                        </div>
-                        <!--<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>-->
-                    </div>
-
                     <div class="row">
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Pelicula</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Serie</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Video</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Pelicula</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Serie</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Video</small>
-                                </div>
+                        <div class="col-lg-12">
+                            <div class="list-group" style="padding: 15px;">
+                                <a href="../Controlador?direccion=informacionMiCuenta" class="list-group-item">Informacion de mi cuenta</a>
+                                <a href="../Controlador?direccion=misPeliculas" class="list-group-item">Mis peliculas</a>
+                                <a href="../Controlador?direccion=misSeries" class="list-group-item">Mis series</a>
+                                <a href="../Controlador?direccion=misVideos" class="list-group-item">Mis videos</a>
+                                <a href="../Controlador?direccion=cerrarSesion" class="list-group-item">Cerrar sesion</a>
                             </div>
                         </div>
                     </div>
@@ -268,6 +118,7 @@
         <!-- Bootstrap core JavaScript -->
         <script src="../vendor/jquery/jquery.min.js"></script>
         <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 
     </body>
     <script>

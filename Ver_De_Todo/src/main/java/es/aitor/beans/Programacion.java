@@ -20,56 +20,62 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="programaciones")
-public class Programacion implements Serializable {
-    
+@Table(name = "programaciones")
+public class Programacion implements Serializable, Comparable<Programacion> {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="idProgramacion")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idProgramacion")
     private int idProgramacion;
-    
-    @Column(name="fechaReproduccion")
+
+    @Column(name = "fechaReproduccion")
     private Date fechaReproduccion;
-    
-    @Column(name="horaReproduccion")
+
+    @Column(name = "horaReproduccion")
     private Time horaReproduccion;
     
+    @Column(name = "duracionContenido")
+    private Time duracionContenido;
+
 //    @ManyToOne
 //    @JoinColumn(name = "idUsuario")
-    @Column(name="idUsuario")
+    @Column(name = "idUsuario")
     private int usuario;
-    
+
 //    @OneToOne(fetch=FetchType.LAZY)
 //    @JoinColumn(name = "idPelicula")
-    @Column(name="idPelicula")
+    @Column(name = "idPelicula")
     private int idPelicula;
-    
+
 //    @OneToOne(fetch=FetchType.LAZY)
 //    @JoinColumn(name = "idSerie")
-    @Column(name="idSerie")
+    @Column(name = "idSerie")
     private int idSerie;
 
     public Programacion() {
     }
 
-    public Programacion(int idProgramacion, Date fechaReproduccion, Time horaReproduccion) {
+    public Programacion(int idProgramacion, Date fechaReproduccion, Time horaReproduccion, Time duracionContenido) {
         this.idProgramacion = idProgramacion;
         this.fechaReproduccion = fechaReproduccion;
         this.horaReproduccion = horaReproduccion;
+        this.duracionContenido = duracionContenido;
     }
-    
-    public Programacion(int idProgramacion, Date fechaReproduccion, Time horaReproduccion, int idPelicula, int idSerie) {
+
+    public Programacion(int idProgramacion, Date fechaReproduccion, Time horaReproduccion, Time duracionContenido, int idPelicula, int idSerie) {
         this.idProgramacion = idProgramacion;
         this.fechaReproduccion = fechaReproduccion;
         this.horaReproduccion = horaReproduccion;
+        this.duracionContenido = duracionContenido;
         this.idPelicula = idPelicula;
         this.idSerie = idSerie;
     }
 
-    public Programacion(int idProgramacion, Date fechaReproduccion, Time horaReproduccion, int usuario, int idPelicula, int idSerie) {
+    public Programacion(int idProgramacion, Date fechaReproduccion, Time horaReproduccion, Time duracionContenido, int usuario, int idPelicula, int idSerie) {
         this.idProgramacion = idProgramacion;
         this.fechaReproduccion = fechaReproduccion;
         this.horaReproduccion = horaReproduccion;
+        this.duracionContenido = duracionContenido;
         this.usuario = usuario;
         this.idPelicula = idPelicula;
         this.idSerie = idSerie;
@@ -98,6 +104,14 @@ public class Programacion implements Serializable {
     public void setHoraReproduccion(Time horaReproduccion) {
         this.horaReproduccion = horaReproduccion;
     }
+    
+    public Time getDuracionContenido() {
+        return duracionContenido;
+    }
+
+    public void setDuracionContenido(Time duracionContenido) {
+        this.duracionContenido = duracionContenido;
+    }
 
     public int getUsuario() {
         return usuario;
@@ -122,5 +136,17 @@ public class Programacion implements Serializable {
     public void setIdSerie(int idSerie) {
         this.idSerie = idSerie;
     }
-    
+
+    @Override
+    public int compareTo(Programacion o) {
+        if (fechaReproduccion.before(o.fechaReproduccion)) {
+            System.out.println("fecha "+fechaReproduccion.getTime());
+            System.out.println("hora "+horaReproduccion.getTime());
+            return -1;
+        }
+        if (fechaReproduccion.after(o.fechaReproduccion)) {
+            return 1;
+        }
+        return 0;
+    }
 }

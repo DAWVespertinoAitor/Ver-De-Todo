@@ -63,6 +63,11 @@ public class Controlador extends HttpServlet {
         IGenericoDAO gdao = daof.getGenericoDAO();
 
         List<Usuario> listaCanales = (List<Usuario>) sesion.getAttribute("canales");
+        List<Usuario> listaOtrosCanales = (List<Usuario>) sesion.getAttribute("canalesNoSuscritos");
+        List<Serie> listaSeries = new ArrayList();
+        List<Pelicula> listaPeliculas = new ArrayList();
+        List<Video> listaVideos = new ArrayList();
+        Usuario usuario = (Usuario) sesion.getAttribute("usuario");
 
         switch (direccion) {
             case "inicio":
@@ -70,13 +75,18 @@ public class Controlador extends HttpServlet {
                 break;
             case "videos":
                 url = "JSP/videos.jsp";
-
-                for (int i = 0; i < listaCanales.size(); i++) {
-                    System.out.println("Estoy entrando");
-                    List<Video> listaVideo = (List<Video>) gdao.getVideos(listaCanales.get(i).getIdUsuario());
-                    listaCanales.get(i).setListaVideos(listaVideo);
+                if (listaCanales.size() > 0) {
+                    for (int i = 0; i < listaCanales.size(); i++) {
+                        List<Video> listaVideo = (List<Video>) gdao.getVideos(listaCanales.get(i).getIdUsuario());
+                        listaCanales.get(i).setListaVideos(listaVideo);
+                    }
+                }
+                for (int i = 0; i < listaOtrosCanales.size(); i++) {
+                    List<Video> listaVideo = (List<Video>) gdao.getVideos(listaOtrosCanales.get(i).getIdUsuario());
+                    listaOtrosCanales.get(i).setListaVideos(listaVideo);
                 }
                 sesion.setAttribute("canales", listaCanales);
+                sesion.setAttribute("canalesNoSuscritos", listaOtrosCanales);
                 break;
             case "series":
                 url = "JSP/series.jsp";
@@ -84,21 +94,112 @@ public class Controlador extends HttpServlet {
                     List<Serie> listaSerie = (List<Serie>) gdao.getSeries(listaCanales.get(i).getIdUsuario());
                     listaCanales.get(i).setListaSeries(listaSerie);
                 }
+                for (int i = 0; i < listaOtrosCanales.size(); i++) {
+                    List<Serie> listaSerie = (List<Serie>) gdao.getSeries(listaOtrosCanales.get(i).getIdUsuario());
+                    listaOtrosCanales.get(i).setListaSeries(listaSerie);
+                }
                 sesion.setAttribute("canales", listaCanales);
+                sesion.setAttribute("canalesNoSuscritos", listaOtrosCanales);
                 break;
             case "peliculas":
                 url = "JSP/peliculas.jsp";
                 for (int i = 0; i < listaCanales.size(); i++) {
-                    System.out.println("ENTRO?");
                     List<Pelicula> listaPelicula = (List<Pelicula>) gdao.getPeliculas(listaCanales.get(i).getIdUsuario());
                     listaCanales.get(i).setListaPeliculas(listaPelicula);
                 }
+                for (int i = 0; i < listaOtrosCanales.size(); i++) {
+                    List<Pelicula> listaPelicula = (List<Pelicula>) gdao.getPeliculas(listaOtrosCanales.get(i).getIdUsuario());
+                    listaOtrosCanales.get(i).setListaPeliculas(listaPelicula);
+                }
                 sesion.setAttribute("canales", listaCanales);
+                sesion.setAttribute("canalesNoSuscritos", listaOtrosCanales);
                 break;
-            case "cuenta":
+            case "miCuenta":
                 url = "JSP/cuenta.jsp";
                 break;
+            case "cerrarSesion":
+                sesion.invalidate();
+                url = "index.jsp";
+                break;
+            case "informacionMiCuenta":
+                usuario = (Usuario) gdao.getOne(usuario.getIdUsuario(), Usuario.class);
+                sesion.setAttribute("informacionMiUsuario", usuario);
+                url = "JSP/miInformacion.jsp";
+                break;
+            case "misPeliculas":
+                listaPeliculas = gdao.getTodasPeliculas(usuario.getIdUsuario());
+                sesion.setAttribute("misPeliculas", listaPeliculas);
+                url = "JSP/misPeliculas.jsp";
+                break;
+            case "misSeries":
+                listaSeries = gdao.getBuscarSeries(usuario.getIdUsuario());
+                sesion.setAttribute("misSeries", listaSeries);
+                url = "JSP/misSeries.jsp";
+                break;
+            case "temporadasSerie":
+                String nombreSerie = request.getParameter("nombreSerie");
+                List<Serie> serieEscogida = gdao.getTraerSerie(nombreSerie, usuario.getIdUsuario());
+                sesion.setAttribute("serieObtenida", serieEscogida);
+                url = "JSP/temporadasSerie.jsp";
+                break;
+            case "capitulosTemporada":
+                String temporadaNumero = request.getParameter("temporadaNumero");
+                serieEscogida = (List<Serie>) sesion.getAttribute("serieObtenida");
+                List<Serie> capitulosTemporada = new ArrayList();
+                for (int i = 0; i < serieEscogida.size(); i++) {
+                    if (serieEscogida.get(i).getTemporada().equals(temporadaNumero)) {
+                        capitulosTemporada.add(serieEscogida.get(i));
+                    }
+                }
+                sesion.setAttribute("capitulosTemporada", capitulosTemporada);
+                url = "JSP/capitulosTemporada.jsp";
+                break;
+            case "misVideos":
+                listaVideos = gdao.getTodosVideos(usuario.getIdUsuario());
+                sesion.setAttribute("misVideos", listaVideos);
+                url = "JSP/misVideos.jsp";
+                break;
+            case "verPeliculasCanal":
+                Usuario usuarioVerCanal = (Usuario) sesion.getAttribute("usuarioVerCanal");
+                listaPeliculas = gdao.getTodasPeliculas(usuarioVerCanal.getIdUsuario());
+                sesion.setAttribute("peliculasCanal", listaPeliculas);
+                url = "JSP/verPeliculasCanal.jsp";
+                break;
+            case "verSeriesCanal":
+                usuarioVerCanal = (Usuario) sesion.getAttribute("usuarioVerCanal");
+                listaSeries = gdao.getBuscarSeries(usuarioVerCanal.getIdUsuario());
+                sesion.setAttribute("seriesCanal", listaSeries);
+                url = "JSP/verSeriesCanal.jsp";
+                break;
+            case "temporadasSerieCanal":
+                String nombreSerieCanal = request.getParameter("nombreSerieCanal");
+                usuarioVerCanal = (Usuario) sesion.getAttribute("usuarioVerCanal");
+                List<Serie> serieEscogidaCanal = gdao.getTraerSerie(nombreSerieCanal, usuarioVerCanal.getIdUsuario());
+                sesion.setAttribute("serieObtenidaCanal", serieEscogidaCanal);
+                url = "JSP/temporadasSerieCanal.jsp";
+                break;
+            case "capitulosTemporadaCanal":
+                String temporadaNumeroCanal = request.getParameter("temporadaNumeroCanal");
+                usuarioVerCanal = (Usuario) sesion.getAttribute("usuarioVerCanal");
+                serieEscogidaCanal = (List<Serie>) sesion.getAttribute("serieObtenidaCanal");
+                List<Serie> capitulosTemporadaCanal = new ArrayList();
+                for (int i = 0; i < serieEscogidaCanal.size(); i++) {
+                    if (serieEscogidaCanal.get(i).getTemporada().equals(temporadaNumeroCanal)) {
+                        capitulosTemporadaCanal.add(serieEscogidaCanal.get(i));
+                    }
+                }
+                sesion.setAttribute("capitulosTemporadaCanal", capitulosTemporadaCanal);
+                url = "JSP/capitulosTemporadaCanal.jsp";
+                break;
+            case "verVideosCanal":
+                usuarioVerCanal = (Usuario) sesion.getAttribute("usuarioVerCanal");
+                listaVideos = gdao.getTodosVideos(usuarioVerCanal.getIdUsuario());
+                sesion.setAttribute("videosCanal", listaVideos);
+                url = "JSP/verVideosCanal.jsp";
+                break;
             case "subirArchivo":
+                listaSeries = gdao.getBuscarSeries(usuario.getIdUsuario());
+                sesion.setAttribute("misSeries", listaSeries);
                 url = "JSP/subirArchivo.jsp";
                 break;
             case "editarProgramacion":
@@ -115,6 +216,30 @@ public class Controlador extends HttpServlet {
                 sesion.setAttribute("idArchivo", idArchivo);
                 sesion.setAttribute("archivoSeriePelicula", tipoArchivo);
                 url = "JSP/anadirProgramacion.jsp";
+                break;
+            case "verCanal":
+                int idVerCanal = Integer.valueOf(request.getParameter("idVerCanal"));
+                usuarioVerCanal = (Usuario) gdao.getOne(idVerCanal, Usuario.class);
+                sesion.setAttribute("usuarioVerCanal", usuarioVerCanal);
+                url = "JSP/verCanal.jsp";
+                break;
+            case "verPelicula":
+                int idPelicula = Integer.valueOf(request.getParameter("idPelicula"));
+                Pelicula pelicula = (Pelicula) gdao.getOne(idPelicula, Pelicula.class);
+                sesion.setAttribute("verPelicula", pelicula);
+                url = "JSP/verPelicula.jsp";
+                break;
+            case "verSerie":
+                int idSerie = Integer.valueOf(request.getParameter("idCapitulo"));
+                Serie serie = (Serie) gdao.getOne(idSerie, Serie.class);
+                sesion.setAttribute("verSerie", serie);
+                url = "JSP/verSerie.jsp";
+                break;
+            case "verVideo":
+                int idVideo = Integer.valueOf(request.getParameter("idVideo"));
+                Video video = (Video) gdao.getOne(idVideo, Video.class);
+                sesion.setAttribute("verVideo", video);
+                url = "JSP/verVideo.jsp";
                 break;
         }
         response.sendRedirect(url);

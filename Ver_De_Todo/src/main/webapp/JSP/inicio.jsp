@@ -27,13 +27,20 @@
         <!-- Custom styles for this template -->
         <link href="../CSS/shop-homepage.css" rel="stylesheet">
         <link href="../CSS/index.css" rel="stylesheet">
+        <link href="../CSS/scroll.css" rel="stylesheet">
 
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
-    <body>
+    <c:if test="${sessionScope.programacion.size() != 0}">
+        <body id="bodyContador" class="scrollbar scrollbar-primary" style="transition: background-color 1s;" onload="countdown('contador', ${sessionScope.programacion.get(0).fechaReproduccion.getTime()+sessionScope.programacion.get(0).horaReproduccion.getTime()})">
+        </c:if>
+        <c:if test="${sessionScope.programacion.size() == 0}">
+        <body  class="scrollbar scrollbar-primary" style="transition: background-color 1s;">
+        </c:if>
+
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
@@ -59,7 +66,7 @@
                             <a class="nav-link" href="../Controlador?direccion=peliculas">Peliculas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../Controlador?direccion=cuenta">Cuenta</a>
+                            <a class="nav-link" href="../Controlador?direccion=miCuenta">Cuenta</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../Controlador?direccion=subirArchivo">Subir archivo</a>
@@ -73,94 +80,96 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-lg-3 menu">
+                <div class="col-lg-3 menu scrollbar scrollbar-primary">
+                    <h4 class="card-title">Suscripciones</h4>
                     <div class="list-group collapse">
                         <c:forEach var="canales" items="${sessionScope.canales}">
-                            <a href="#" class="list-group-item"><c:out value="${canales.nombreCanal}"/></a>
+                            <a href="../Controlador?direccion=verCanal&idVerCanal=${canales.idUsuario}" class="list-group-item"><c:out value="${canales.nombreCanal}"/></a>
                         </c:forEach>
+                        <c:if test="${sessionScope.canales.size() == 0}">
+                            <div class="list-group-item">No tienes ninguna suscripcion.</div>
+                        </c:if>
+                    </div>
+                    <div class="list-group" style="margin-top: 20px;">
+                        <div class="list-group-item"><span class="fas fa-calendar-alt"></span><br>Este boton sirve para programar una pelicula para una fecha y hora concreta. Por ejemplo, a la hora de comer.</div>
+                        <div class="list-group-item"><span class="fas fa-user-plus"></span><br>Este boton sirve para suscribirte a un canal si te interesa el contenido que sube.</div>
+                        <div class="list-group-item"><span class="fas fa-user-minus"></span><br>Este boton sirve para desuscribirte de un canal al que estes siguiendo.</div>
                     </div>
                 </div>
                 <!-- /.col-lg-3 -->
                 <div class="col-lg-9">
 
                     <div id="carouselExampleIndicators" class="carousel /*slide*/ my-4" data-ride="carousel">
-                        <!--<ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        </ol>-->
                         <div class="carousel-inner" role="listbox">
-                            <div class="carousel-item active">
-                                <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
-                            </div>
+                            <h3>
+                                <div id='contador' style="border: 1px solid #212529; border-radius: 5px; text-align: center;">No hay ninguna programación</div>
+                            </h3><br>
                         </div>
-                        <!--<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>-->
                     </div>
 
                     <div class="row">
-                        <table class="table" style="margin-left: 10px;">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Dia de reproduccion</th>
-                                    <th scope="col">Hora de reproduccion</th>
-                                    <th scope="col">Contendio</th>
-                                    <th scope="col">Editar/Borrar</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>02/08/2018</td>
-                                    <td>17:00</td>
-                                    <td>Pelicula</td>
-                                </tr>
-                                <tr>
-                                    <td>03/08/2018</td>
-                                    <td>19:00</td>
-                                    <td>Serie</td>
-                                </tr>
-                                <tr>
-                                    <td>04/08/2018</td>
-                                    <td>21:00</td>
-                                    <td>Serie</td>
-                                </tr>
-                                <c:forEach var="contenido" items="${sessionScope.programacion}">
-                                    <tr id="${contenido.idProgramacion}">
-                                        <td><c:out value="${contenido.fechaReproduccion}"/></td>
-                                        <td><c:out value="${contenido.horaReproduccion}"/></td>
-                                        <c:if test="${contenido.idPelicula != 0}">
-                                            <td>Pelicula</td>
-                                        </c:if>
-                                        <c:if test="${contenido.idSerie != 0}">
-                                            <td>Serie</td>
-                                        </c:if>
-                                <form action="../Controlador" method="POST">
-                                    <td>
-                                        <input type="hidden" name="idProgramacion" id="idProgramacion" value="${contenido.idProgramacion}"/>
-                                        <button id="menu-canales" class="navbar-toggler" type="submit" name="direccion" value="editarProgramacion">
-                                            <span class="fas fa-calendar-plus" style="color: green;"></span>
-                                        </button>
-                                        <button id="menu-canales" class="navbar-toggler" type="button" onclick="eliminarProgramacion(${contenido.idProgramacion})">
-                                            <span class="fas fa-calendar-times" style="color: red;"></span>
-                                        </button>
-                                    </td>
-                                </form>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
+                        <div class="col-lg-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Dia de reproduccion</th>
+                                        <th scope="col">Hora de reproduccion</th>
+                                        <th scope="col">Contendio</th>
+                                        <th scope="col">Editar/Borrar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="contenido" items="${sessionScope.programacion}" varStatus="contador">
+                                        <c:if test="${contador.index == 0}">
+                                            <tr id="${contenido.idProgramacion}">
+                                                <td><c:out value="${contenido.fechaReproduccion}"/></td>
+                                                <td><c:out value="${contenido.horaReproduccion}"/></td>
+                                                <c:if test="${contenido.idPelicula != 0}">
+                                                    <td>Pelicula</td>
+                                                </c:if>
+                                                <c:if test="${contenido.idSerie != 0}">
+                                                    <td>Serie</td>
+                                                </c:if>
+                                        <form action="../Controlador" method="POST">
+                                            <td>
+                                                <input type="hidden" name="idProgramacion" id="idProgramacion" value="${contenido.idProgramacion}"/>
+                                                <button id="menu-canales" class="navbar-toggler" type="submit" name="direccion" value="editarProgramacion">
+                                                    <span class="fas fa-calendar-plus" style="color: green;"></span>
+                                                </button>
+                                                <button id="menu-canales" class="navbar-toggler" type="button" onclick="eliminarProgramacion(${contenido.idProgramacion})">
+                                                    <span class="fas fa-calendar-times" style="color: red;"></span>
+                                                </button>
+                                            </td>
+                                        </form>
+                                        </tr>
+                                    </c:if>
+                                    <c:if test="${contador.index > 0}">
+                                        <tr id="${contenido.idProgramacion}">
+                                            <td><c:out value="${contenido.fechaReproduccion}"/></td>
+                                            <td><c:out value="${contenido.horaReproduccion}"/></td>
+                                            <c:if test="${contenido.idPelicula != 0}">
+                                                <td>Pelicula</td>
+                                            </c:if>
+                                            <c:if test="${contenido.idSerie != 0}">
+                                                <td>Serie</td>
+                                            </c:if>
+                                        <form action="../Controlador" method="POST">
+                                            <td>
+                                                <input type="hidden" name="idProgramacion" id="idProgramacion" value="${contenido.idProgramacion}"/>
+                                                <button class="navbar-toggler" type="submit" name="direccion" value="editarProgramacion">
+                                                    <span class="fas fa-calendar-plus" style="color: green;"></span>
+                                                </button>
+                                                <button class="navbar-toggler" type="button" onclick="eliminarProgramacion(${contenido.idProgramacion})">
+                                                    <span class="fas fa-calendar-times" style="color: red;"></span>
+                                                </button>
+                                            </td>
+                                        </form>
+                                        </tr>
+                                    </c:if>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <!-- /.row -->
 
@@ -182,46 +191,117 @@
         </footer>
 
         <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../vendor/jquery/jquery.min.js"></script>
+        <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script type="text/javascript" src="../JS/codigo.js"></script>
-        <script type="text/javascript" src="../JS/borrarProgramacion.js"></script>
+        <script type="text/javascript" src="../JS/borrarProgramacion.js" ons></script>
 
     </body>
     <script>
-        $(document).ready(function () {
-            var menu = 0;
+                                                    $(document).ready(function () {
+                                                        var menu = 0;
 
-            if (screen.width > 769) {
-                $(".list-group").addClass("show");
+                                                        if (screen.width > 769) {
+                                                            $(".list-group").addClass("show");
 
-            } else {
-                $(".menu").css("bottom", "100%");
-            }
+                                                        } else {
+                                                            $(".menu").css("bottom", "100%");
+                                                        }
 
-            $("#menu-canales").click(function () {
-                if (menu == 0) {
-                    $("body").css("overflow", "hidden");
-                    $(".menu").css("bottom", "0");
-                    menu = 1;
-                } else if (menu == 1) {
-                    $("body").css("overflow", "auto");
-                    $(".menu").css("bottom", "100%");
-                    menu = 0;
-                }
-            });
+                                                        $("#menu-canales").click(function () {
+                                                            if (menu == 0) {
+                                                                $("body").css("overflow", "hidden");
+                                                                $(".menu").css("bottom", "0");
+                                                                menu = 1;
+                                                            } else if (menu == 1) {
+                                                                $("body").css("overflow", "auto");
+                                                                $(".menu").css("bottom", "100%");
+                                                                menu = 0;
+                                                            }
+                                                        });
 
-            $(window).resize(function () {
-                if ($(window).width() > 769) {
-                    $(".list-group").addClass("show");
-                    $("body").css("overflow", "auto");
-                    $(".menu").css("bottom", "0");
-                } else {
-                    $(".list-group").removeClass("show");
-                    $("body").css("overflow", "auto");
-                    $(".menu").css("bottom", "100%");
-                }
-            });
-        });
+                                                        $(window).resize(function () {
+                                                            if ($(window).width() > 769) {
+                                                                $(".list-group").addClass("show");
+                                                                $("body").css("overflow", "auto");
+                                                                $(".menu").css("bottom", "0");
+                                                            } else {
+                                                                $(".list-group").removeClass("show");
+                                                                $("body").css("overflow", "auto");
+                                                                $(".menu").css("bottom", "100%");
+                                                            }
+                                                        });
+                                                    });
+                                                    var idProgramacion = ${sessionScope.programacion.get(0).idProgramacion};
+                                                    var video;
+                                                    function terminado() {
+                                                        var xmlhttp = crearPeticion();
+                                                        xmlhttp.onreadystatechange = function () {
+                                                            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                                                                location.reload();
+                                                            }
+                                                        }
+                                                        xmlhttp.open("GET", "../EditarProg?idProg=" + idProgramacion + "&estado=terminado", true);
+                                                        xmlhttp.send();
+                                                    }
+
+                                                    function countdown(id, tiempo) {
+                                                        var fecha = new Date(tiempo + 3600000)
+                                                        var hoy = new Date()
+                                                        var dias = 0
+                                                        var horas = 0
+                                                        var minutos = 0
+                                                        var segundos = 0
+                                                        if (fecha > hoy) {
+                                                            var diferencia = (fecha.getTime() - hoy.getTime()) / 1000
+                                                            dias = Math.floor(diferencia / 86400)
+                                                            diferencia = diferencia - (86400 * dias)
+                                                            horas = Math.floor(diferencia / 3600)
+                                                            diferencia = diferencia - (3600 * horas)
+                                                            minutos = Math.floor(diferencia / 60)
+                                                            diferencia = diferencia - (60 * minutos)
+                                                            segundos = Math.floor(diferencia)
+
+                                                            document.getElementById("contador").innerHTML = 'El contenido se reproducirá en <br> ' + dias + ' D&iacute;as, ' + horas + ' Horas, ' + minutos + ' Minutos, ' + segundos + ' Segundos. '
+
+                                                            if (dias > 0 || horas > 0 || minutos > 0 || segundos > 0) {
+                                                                setTimeout("countdown(\'" + id + "'," + tiempo + ")", 1000)
+                                                            } else {
+                                                                setTimeout("countdown(\'" + id + "'," + tiempo + ")", 1000)
+                                                            }
+                                                        } else {
+                                                            var diferenciaTiempo = (hoy.getTime() - fecha.getTime()) / 1000;
+                                                            //diferenciaTiempo = diferenciaTiempo - (60 * diferenciaTiempo.getMinutes());
+                                                            //segundos = Math.floor(diferenciaTiempo)
+                                                            console.log("Esta es la diferencia de tiempo en segundos " + diferenciaTiempo);
+
+                                                            var xmlhttp = crearPeticion();
+                                                            xmlhttp.onreadystatechange = function () {
+                                                                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                                                                    var respuesta = xmlhttp.responseText + "#t=" + diferenciaTiempo + "\" autoplay onended='terminado()' id='contenidoReproducido' type='video/*' style=\" margin-top: 10px; border: 1px solid black;\" width='100%'></video><div id='controles'><button id='volumenOff' onclick='muted()' class='navbar-toggler' style='float: left;'><span class='fa fa-volume-off'></span></button><button id='volumenUp' onclick='desmuted()' class='navbar-toggler' style='float: left; '><span class='fa fa-volume-up'></span></button></div>";
+                                                                    
+                                                                    document.getElementById("contador").innerHTML = respuesta;
+
+
+                                                                }
+                                                            }
+                                                            xmlhttp.open("GET", "../reproducirContenido?idProgramacion=" + idProgramacion, true);
+                                                            xmlhttp.send();
+
+
+
+
+
+                                                            //document.getElementById('contador').innerHTML = 'Quedan ' + dias + ' D&iacute;as, ' + horas + ' Horas, ' + minutos + ' Minutos, ' + segundos + ' Segundos'
+                                                        }
+
+                                                    }
+                                                    function muted() {
+                                                        $('#contenidoReproducido')[0].muted = true;
+                                                    }
+                                                    function desmuted() {
+                                                        $('#contenidoReproducido')[0].muted = false;
+                                                    }
     </script>
 </html>

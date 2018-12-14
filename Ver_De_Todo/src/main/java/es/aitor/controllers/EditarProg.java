@@ -57,37 +57,37 @@ public class EditarProg extends HttpServlet {
         Programacion programacion = new Programacion();
         Usuario usuario = (Usuario) sesion.getAttribute("usuario");
         List<Programacion> listaProgramacion = (List<Programacion>) sesion.getAttribute("programacion");
-        
+
         Date fecha = Date.valueOf(fechaReproduccion);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         long hora = 0;
-        
-        try{
+
+        try {
             hora = sdf.parse(horaReproduccion).getTime();
-        } catch(ParseException pe){
+        } catch (ParseException pe) {
             pe.addSuppressed(pe);
         }
-        
+
         Time horaR = new Time(hora);
-        
+
         programacion.setIdProgramacion(idProgramacion);
         programacion.setFechaReproduccion(fecha);
         programacion.setHoraReproduccion(horaR);
-        
+
         for (int i = 0; i < listaProgramacion.size(); i++) {
-            if(listaProgramacion.get(i).getIdProgramacion() == idProgramacion){
+            if (listaProgramacion.get(i).getIdProgramacion() == idProgramacion) {
                 programacion.setIdPelicula(listaProgramacion.get(i).getIdPelicula());
                 programacion.setIdSerie(listaProgramacion.get(i).getIdSerie());
                 programacion.setUsuario(usuario.getIdUsuario());
-                if(!listaProgramacion.get(i).getFechaReproduccion().equals(fecha)){
+                if (!listaProgramacion.get(i).getFechaReproduccion().equals(fecha)) {
                     listaProgramacion.get(i).setFechaReproduccion(fecha);
-                } else if (!listaProgramacion.get(i).getHoraReproduccion().equals(horaR)){
+                } else if (!listaProgramacion.get(i).getHoraReproduccion().equals(horaR)) {
                     listaProgramacion.get(i).setHoraReproduccion(horaR);
                 }
             }
         }
         sesion.setAttribute("programacion", listaProgramacion);
-        
+
         gdao.insertUpdate(programacion);
         response.sendRedirect("JSP/inicio.jsp");
 
@@ -109,17 +109,34 @@ public class EditarProg extends HttpServlet {
         HttpSession sesion = request.getSession(true);
         DAOFactory daof = DAOFactory.getDAOFactory();
         IGenericoDAO gdao = daof.getGenericoDAO();
-        
+
         List<Programacion> listaProgramacion = (List<Programacion>) sesion.getAttribute("programacion");
         int id = Integer.valueOf(request.getParameter("idProg"));
-        for(int i=0; i<listaProgramacion.size();i++){
-            if(listaProgramacion.get(i).getIdProgramacion() == id){
-                gdao.delete(listaProgramacion.get(i));
-                listaProgramacion.remove(i);
-            }
+        String estado = request.getParameter("estado");
+        switch (estado) {
+            case "borrar":
+                for (int i = 0; i < listaProgramacion.size(); i++) {
+                    if (listaProgramacion.get(i).getIdProgramacion() == id) {
+                        gdao.delete(listaProgramacion.get(i));
+                        listaProgramacion.remove(i);
+
+                    }
+
+                }
+                break;
+            case "terminado":
+                for (int i = 0; i < listaProgramacion.size(); i++) {
+                    if (listaProgramacion.get(i).getIdProgramacion() == id) {
+                        listaProgramacion.remove(i);
+                    }
+                }
+                break;
         }
+
         sesion.setAttribute("programacion", listaProgramacion);
-        
+        if (listaProgramacion.size() == 0) {
+            out.println("programaciones");
+        }
     }
 
     /**

@@ -59,7 +59,7 @@
                             <a class="nav-link" href="../Controlador?direccion=peliculas">Peliculas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../Controlador?direccion=cuenta">Cuenta</a>
+                            <a class="nav-link" href="../Controlador?direccion=miCuenta">Cuenta</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../Controlador?direccion=subirArchivo">Subir archivo</a>
@@ -73,11 +73,15 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-lg-3 menu">
+                <div class="col-lg-3 menu scrollbar scrollbar-primary">
+                    <h4 class="card-title">Suscripciones</h4>
                     <div class="list-group collapse">
                         <c:forEach var="canales" items="${sessionScope.canales}">
-                            <a href="#" class="list-group-item"><c:out value="${canales.nombreCanal}"/></a>
+                            <a href="../Controlador?direccion=verCanal&idVerCanal=${canales.idUsuario}" class="list-group-item"><c:out value="${canales.nombreCanal}"/></a>
                         </c:forEach>
+                        <c:if test="${sessionScope.canales.size() == 0}">
+                            <div class="list-group-item">No tienes ninguna suscripcion.</div>
+                        </c:if>
                     </div>
                 </div>
                 <!-- /.col-lg-3 -->

@@ -11,7 +11,9 @@ es\aitor\daofactory\MySQLDAOFactory.class
 es\aitor\dao\IGenericoDAO.class
 es\aitor\beans\Usuario.class
 es\aitor\beans\Video.class
+es\aitor\controllers\reproducirContenido.class
 es\aitor\dao\GenericoDAO.class
+es\aitor\controllers\actualizarDatos.class
 es\aitor\beans\Pelicula.class
 es\aitor\controllers\Controlador.class
 es\aitor\controllers\RegistroAjax.class

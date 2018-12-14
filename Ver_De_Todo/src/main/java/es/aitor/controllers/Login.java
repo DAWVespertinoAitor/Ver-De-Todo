@@ -19,7 +19,9 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -97,34 +99,65 @@ public class Login extends HttpServlet {
                     //Recojo los canales a los que esta suscrito
                     List<Suscriptor> listaSuscripciones = null;
                     List<Usuario> listaCanales = new ArrayList();
-//                    List<Usuario> listaCanalesFinal = new ArrayList();
+                    List<Usuario> listaCanalesOtros = new ArrayList();
 
                     Pelicula pelicula = new Pelicula();
                     Serie serie = new Serie();
                     Video video = new Video();
 
+                    //Recupero las suscripciones
                     listaSuscripciones = (List<Suscriptor>) gdao.getMisSuscripciones(usuarioLogin2.getIdUsuario());
                     for (int i = 0; i < listaSuscripciones.size(); i++) {
                         Usuario usuarioRecuperado = (Usuario) gdao.getOne((Serializable) listaSuscripciones.get(i).getIdUsuario(), Usuario.class);
                         listaCanales.add(usuarioRecuperado);
-//                        listaCanalesFinal.add(usuarioRecuperado);
                     }
-                    
-                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    LocalDate ahora = LocalDate.now();
+
+                    String idCanales = "";
+                    //Recupero canales a los que no esta suscrito
+                    if (listaCanales.size() > 0) {
+                        for (int i = 0; i < listaCanales.size(); i++) {
+                            if (i == 0) {
+                                idCanales = idCanales + usuarioLogin2.getIdUsuario() + ", " + listaCanales.get(i).getIdUsuario();
+                            } else {
+                                idCanales = idCanales + ", " + listaCanales.get(i).getIdUsuario();
+                            }
+                        }
+                        listaCanalesOtros = (List<Usuario>) gdao.getOtrosCanales(idCanales);
+                    } else {
+                        idCanales = String.valueOf(usuarioLogin2.getIdUsuario());
+                        listaCanalesOtros = (List<Usuario>) gdao.getOtrosCanales(idCanales);
+                    }
+
+                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm:00");
+                    DateTimeFormatter fmtFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    LocalDate hoy = LocalDate.now();
+                    LocalDateTime hora = LocalDateTime.now();
                     System.out.println("-----------------------------");
+                    System.out.println("Que hora es? Son las " + fmt.format(hora));
+                    System.out.println("Que dia es? Estamos " + fmtFecha.format(hoy));
 //                    Date hoy = new Date(ahora.getYear(), ahora.now().getMonthValue(), ahora.now().getDayOfMonth());
-                    String fechaHoy = "2018-"+String.valueOf(ahora.getMonthValue())+"-"+String.valueOf(ahora.getDayOfMonth());
+                    String fechaHoy = "2018-" + String.valueOf(hoy.getMonthValue()) + "-" + String.valueOf(hoy.getDayOfMonth());
                     List<Programacion> listaProgramacion = gdao.getProgramacion(usuarioLogin2.getIdUsuario(), fechaHoy);
-                   
+                    for (int i = 0; i < listaProgramacion.size(); i++) {
+                        if (listaProgramacion.get(i).getFechaReproduccion().equals(Date.valueOf(fmtFecha.format(hoy)))) {
+                            long diferencia = Time.valueOf(fmt.format(hora)).getTime() - listaProgramacion.get(i).getHoraReproduccion().getTime();
+                            if (diferencia > listaProgramacion.get(i).getDuracionContenido().getTime()) {
+                                listaProgramacion.remove(i);
+                            }
+                        }
+                    }
+
                     //Meto el usuario en sesion
                     sesion.setAttribute("usuario", usuarioLogin2);
 
                     //Meto la programacion en sesion
                     sesion.setAttribute("programacion", listaProgramacion);
-                    
+
                     //Meto los canales en sesion
                     sesion.setAttribute("canales", listaCanales);
+
+                    //Meto los otros canales en sesion
+                    sesion.setAttribute("canalesNoSuscritos", listaCanalesOtros);
                 }
                 break;
             case "registro":

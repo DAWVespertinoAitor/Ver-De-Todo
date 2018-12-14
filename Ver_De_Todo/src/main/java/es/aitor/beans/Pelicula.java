@@ -6,6 +6,7 @@
 package es.aitor.beans;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,6 +32,9 @@ public class Pelicula implements Serializable {
     @Column(name="fechaDeSubida")
     private Timestamp fechaDeSubida;
     
+    @Column(name="duracionPelicula")
+    private Time duracionPelicula;
+    
     @Column(name="genero", length=30)
     private String genero;
     
@@ -49,6 +53,9 @@ public class Pelicula implements Serializable {
     @Column(name="nombreArchivo")
     private String nombreArchivo;
     
+    @Column(name="nombrePortada")
+    private String nombrePortada;
+    
     @Column(name="subtitulos")
     private char subtitulos; //E=español, I=ingles, L=latino
     
@@ -59,29 +66,33 @@ public class Pelicula implements Serializable {
     public Pelicula() {
     }
 
-    public Pelicula(int idPelicula, String titulo, Timestamp fechaDeSubida, String genero, String pais, String director, String sinopsis, String actores, String nombreArchivo, char subtitulos) {
+    public Pelicula(int idPelicula, String titulo, Timestamp fechaDeSubida, Time duracionPelicula, String genero, String pais, String director, String sinopsis, String actores, String nombreArchivo, String nombrePortada, char subtitulos) {
         this.idPelicula = idPelicula;
         this.titulo = titulo;
         this.fechaDeSubida = fechaDeSubida;
+        this.duracionPelicula = duracionPelicula;
         this.genero = genero;
         this.pais = pais;
         this.director = director;
         this.sinopsis = sinopsis;
         this.actores = actores;
         this.nombreArchivo = nombreArchivo;
+        this.nombrePortada = nombrePortada;
         this.subtitulos = subtitulos;
     }
     
-    public Pelicula(int idPelicula, String titulo, Timestamp fechaDeSubida, String genero, String pais, String director, String sinopsis, String actores, String nombreArchivo, char subtitulos, Usuario usuario) {
+    public Pelicula(int idPelicula, String titulo, Timestamp fechaDeSubida, Time duracionPelicula, String genero, String pais, String director, String sinopsis, String actores, String nombreArchivo, String nombrePortada, char subtitulos, Usuario usuario) {
         this.idPelicula = idPelicula;
         this.titulo = titulo;
         this.fechaDeSubida = fechaDeSubida;
+        this.duracionPelicula = duracionPelicula;
         this.genero = genero;
         this.pais = pais;
         this.director = director;
         this.sinopsis = sinopsis;
         this.actores = actores;
         this.nombreArchivo = nombreArchivo;
+        this.nombrePortada = nombrePortada;
         this.subtitulos = subtitulos;
         this.usuario = usuario;
     }
@@ -116,6 +127,14 @@ public class Pelicula implements Serializable {
 
     public void setFechaDeSubida(Timestamp fechaDeSubida) {
         this.fechaDeSubida = fechaDeSubida;
+    }
+    
+    public Time getDuracionPelicula() {
+        return duracionPelicula;
+    }
+
+    public void setDuracionPelicula(Time duracionPelicula) {
+        this.duracionPelicula = duracionPelicula;
     }
 
     public String getGenero() {
@@ -164,6 +183,14 @@ public class Pelicula implements Serializable {
 
     public void setNombreArchivo(String nombreArchivo) {
         this.nombreArchivo = nombreArchivo;
+    }
+
+    public String getNombrePortada() {
+        return nombrePortada;
+    }
+
+    public void setNombrePortada(String nombrePortada) {
+        this.nombrePortada = nombrePortada;
     }
     
     public char getSubtitulos() {

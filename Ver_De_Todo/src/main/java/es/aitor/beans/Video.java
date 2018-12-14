@@ -34,6 +34,9 @@ public class Video implements Serializable {
     @Column(name="nombreArchivo")
     private String nombreArchivo;
     
+    @Column(name="nombrePortada")
+    private String nombrePortada;
+    
     @Column(name="fechaDeSubida")
     private Timestamp fechaDeSubida;
     
@@ -44,19 +47,21 @@ public class Video implements Serializable {
     public Video() {
     }
 
-    public Video(int idVideo, String titulo, String descripcion, String nombreArchivo, Timestamp fechaDeSubida) {
+    public Video(int idVideo, String titulo, String descripcion, String nombreArchivo, String nombrePortada, Timestamp fechaDeSubida) {
         this.idVideo = idVideo;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.nombreArchivo = nombreArchivo;
+        this.nombrePortada = nombrePortada;
         this.fechaDeSubida = fechaDeSubida;
     }
 
-    public Video(int idVideo, String titulo, String descripcion, String nombreArchivo, Timestamp fechaDeSubida, Usuario usuario) {
+    public Video(int idVideo, String titulo, String descripcion, String nombreArchivo, String nombrePortada, Timestamp fechaDeSubida, Usuario usuario) {
         this.idVideo = idVideo;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.nombreArchivo = nombreArchivo;
+        this.nombrePortada = nombrePortada;
         this.fechaDeSubida = fechaDeSubida;
         this.usuario = usuario;
     }
@@ -93,6 +98,14 @@ public class Video implements Serializable {
         this.nombreArchivo = nombreArchivo;
     }
 
+    public String getNombrePortada() {
+        return nombrePortada;
+    }
+
+    public void setNombrePortada(String nombrePortada) {
+        this.nombrePortada = nombrePortada;
+    }
+    
     public Usuario getUsuario() {
         return usuario;
     }

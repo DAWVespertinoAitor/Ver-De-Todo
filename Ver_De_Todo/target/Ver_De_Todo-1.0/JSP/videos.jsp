@@ -24,6 +24,7 @@
         <!-- Custom styles for this template -->
         <link href="../CSS/shop-homepage.css" rel="stylesheet">
         <link href="../CSS/index.css" rel="stylesheet">
+        <link href="../CSS/scroll.css" rel="stylesheet">
         <!--Font awesome-->
         <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
 
@@ -32,7 +33,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
-    <body>
+    <body class="scrollbar scrollbar-primary">
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
@@ -46,22 +47,22 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="./inicio.jsp">Inicio</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="./videos.jsp">Videos</a>
+                            <a class="nav-link" href="../Controlador?direccion=inicio">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./series.jsp">Series</a>
+                            <a class="nav-link active" href="../Controlador?direccion=videos">Videos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./peliculas.jsp">Peliculas</a>
+                            <a class="nav-link" href="../Controlador?direccion=series">Series</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./cuenta.jsp">Cuenta</a>
+                            <a class="nav-link" href="../Controlador?direccion=peliculas">Peliculas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./subirArchivo.jsp">Subir archivo</a>
+                            <a class="nav-link" href="../Controlador?direccion=miCuenta">Cuenta</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../Controlador?direccion=subirArchivo">Subir archivo</a>
                         </li>
                     </ul>
                 </div>
@@ -72,46 +73,25 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-lg-3 menu">
+                <div class="col-lg-3 menu scrollbar scrollbar-primary">
+                    <h4 class="card-title">Suscripciones</h4>
                     <div class="list-group collapse">
                         <c:forEach var="canales" items="${sessionScope.canales}">
-                            <a href="#" class="list-group-item"><c:out value="${canales.nombreCanal}"/></a>
+                            <a href="../Controlador?direccion=verCanal&idVerCanal=${canales.idUsuario}" class="list-group-item"><c:out value="${canales.nombreCanal}"/></a>
                         </c:forEach>
+                        <c:if test="${sessionScope.canales.size() == 0}">
+                            <div class="list-group-item">No tienes ninguna suscripcion.</div>
+                        </c:if>
                     </div>
-
+                    <div class="list-group" style="margin-top: 20px;">
+                        <div class="list-group-item"><span class="fas fa-calendar-alt"></span><br>Este boton sirve para programar una pelicula para una fecha y hora concreta. Por ejemplo, a la hora de comer.</div>
+                        <div class="list-group-item"><span class="fas fa-user-plus"></span><br>Este boton sirve para suscribirte a un canal si te interesa el contenido que sube.</div>
+                        <div class="list-group-item"><span class="fas fa-user-minus"></span><br>Este boton sirve para desuscribirte de un canal al que estes siguiendo.</div>
+                    </div>
                 </div>
                 <!-- /.col-lg-3 -->
                 <div class="col-lg-9">
-
-                    <div id="carouselExampleIndicators" class="carousel /*slide*/ my-4" data-ride="carousel">
-                        <!--<ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        </ol>-->
-                        <div class="carousel-inner" role="listbox">
-                            <div class="carousel-item active">
-                                <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
-                            </div>
-                        </div>
-                        <!--<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>-->
-                    </div>
-
-                    <div class="row">
-
+                    <div class="row my-4">
                         <c:forEach var="canalesVideo" items="${sessionScope.canales}">
                             <c:if test="${canalesVideo.listaVideos.size() != 0}">
                                 <div class="col-lg-12 my-4 container2" style=" padding-right: 0;">
@@ -129,7 +109,9 @@
                                                             <c:forEach var="video" items="${canalesVideo.listaVideos}">
                                                                 <div class="col-lg-4 col-md-6 mb-4">
                                                                     <div class="card h-100">
-                                                                        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                                                                        <a href="../Controlador?direccion=verVideo&idVideo=${video.idVideo}">
+                                                                            <img class="card-img-top" src="http://127.0.0.1:8887/${video.nombrePortada}" alt="Image" style="max-height: 321.19px; min-height: 321.19px;">
+                                                                        </a>
                                                                         <div class="card-body">
                                                                             <h4 class="card-title">
                                                                                 <a href="#">${video.titulo}</a>
@@ -144,13 +126,9 @@
                                                                     </div>
                                                                 </div>
                                                             </c:forEach>
-
-                                                            <c:if test="${canalesVideo.listaVideos.size() != 0}"></c:if>
-                                                            </div>
-                                                            <div class="card-footer">
-                                                                <input type="hidden" name="idProgramacion" id="idProgramacion" value="${sessionScope.idProgramacion}"/>
-                                                            <button id="menu-navbar" class="navbar-toggler" type="button"
-                                                                    data-toggle="collapse" aria-controls="navbarResponsive"style="background-color: #ff4646;">
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <button id="menu-navbar" class="navbar-toggler" type="button" style="background-color: #ff4646;" onclick="borrarSuscripcion(${canalesVideo.idUsuario});">
                                                                 <span class="fas fa-user-minus icon-white"></span>
                                                             </button>
                                                         </div>
@@ -162,85 +140,49 @@
                                 </div>
                             </c:if>
                         </c:forEach>
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Serie</small>
-                                </div>
-                            </div>
-                        </div>
+                        <h5 style="margin-left: 30px;">Canales que podrías seguir...</h5>
+                        <c:forEach var="canalesNoSusVideos" items="${sessionScope.canalesNoSuscritos}">
+                            <c:if test="${canalesNoSusVideos.listaVideos.size() != 0}">
+                                <div class="col-lg-12 my-4 container2" style=" padding-right: 0;">
+                                    <div class="carousel-inner" role="listbox">
+                                        <!-- Slide One - Set the background image for this slide in the line below -->
+                                        <div class="carousel-item signin1 active scrollbar scrollbar-primary">
+                                            <div class="card h-100 col-lg-12" style="padding: 0 0;">
+                                                <div class="card-header">
+                                                    <h5>Ultimos contenidos de ${canalesNoSusVideos.nombreCanal}</h5>
+                                                </div>
+                                                <div class="card-body">
 
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                                                    <c:forEach var="video" items="${canalesNoSusVideos.listaVideos}">
+                                                        <div class="col-lg-4 mb-4" style="float:left;">
+                                                            <div class="card h-100">
+                                                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                                                                <div class="card-body" style="min-height: 170px; max-height: 170px;">
+                                                                    <h4 class="card-title">
+                                                                        <a href="#">${video.titulo}</a>
+                                                                    </h4>
+                                                                    <c:if test="${video.descripcion != '                                                    '}">
+                                                                        <p class="card-text">Descripcion: ${video.descripcion}</p>
+                                                                    </c:if>
+                                                                    <c:if test="${video.descripcion == '                                                    '}">
+                                                                        <p class="card-text">Este video no contiene descripción.</p>
+                                                                    </c:if>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </c:forEach>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <button id="menu-navbar" class="navbar-toggler" type="button" style="background-color: #069d02;" onclick="addSuscripcion(${canalesNoSusVideos.idUsuario})">
+                                                        <span class="fas fa-user-plus icon-white"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Video</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Pelicula</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Serie</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="card h-100">
-                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="#">Titulo</a>
-                                    </h4>
-                                    <h5>Canal</h5>
-                                    <p class="card-text">Descripcion: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">Video</small>
-                                </div>
-                            </div>
-                        </div>
+                            </c:if>
+                        </c:forEach>
                     </div>
                     <!-- /.row -->
 
@@ -264,42 +206,44 @@
         <!-- Bootstrap core JavaScript -->
         <script src="../vendor/jquery/jquery.min.js"></script>
         <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="../JS/codigo.js"></script>
+        <script type="text/javascript" src="../JS/susYDesus.js"></script>
 
     </body>
     <script>
-        $(document).ready(function () {
-            var menu = 0;
+                                                        $(document).ready(function () {
+                                                            var menu = 0;
 
-            if (screen.width > 769) {
-                $(".list-group").addClass("show");
+                                                            if (screen.width > 769) {
+                                                                $(".list-group").addClass("show");
 
-            } else {
-                $(".menu").css("bottom", "100%");
-            }
+                                                            } else {
+                                                                $(".menu").css("bottom", "100%");
+                                                            }
 
-            $("#menu-canales").click(function () {
-                if (menu == 0) {
-                    $("body").css("overflow", "hidden");
-                    $(".menu").css("bottom", "0");
-                    menu = 1;
-                } else if (menu == 1) {
-                    $("body").css("overflow", "auto");
-                    $(".menu").css("bottom", "100%");
-                    menu = 0;
-                }
-            });
+                                                            $("#menu-canales").click(function () {
+                                                                if (menu == 0) {
+                                                                    $("body").css("overflow", "hidden");
+                                                                    $(".menu").css("bottom", "0");
+                                                                    menu = 1;
+                                                                } else if (menu == 1) {
+                                                                    $("body").css("overflow", "auto");
+                                                                    $(".menu").css("bottom", "100%");
+                                                                    menu = 0;
+                                                                }
+                                                            });
 
-            $(window).resize(function () {
-                if ($(window).width() > 769) {
-                    $(".list-group").addClass("show");
-                    $("body").css("overflow", "auto");
-                    $(".menu").css("bottom", "0");
-                } else {
-                    $(".list-group").removeClass("show");
-                    $("body").css("overflow", "auto");
-                    $(".menu").css("bottom", "100%");
-                }
-            });
-        });
+                                                            $(window).resize(function () {
+                                                                if ($(window).width() > 769) {
+                                                                    $(".list-group").addClass("show");
+                                                                    $("body").css("overflow", "auto");
+                                                                    $(".menu").css("bottom", "0");
+                                                                } else {
+                                                                    $(".list-group").removeClass("show");
+                                                                    $("body").css("overflow", "auto");
+                                                                    $(".menu").css("bottom", "100%");
+                                                                }
+                                                            });
+                                                        });
     </script>
 </html>

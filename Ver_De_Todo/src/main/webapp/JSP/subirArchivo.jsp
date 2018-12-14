@@ -24,6 +24,7 @@
         <link href="../CSS/shop-homepage.css" rel="stylesheet">
         <link href="../CSS/index.css" rel="stylesheet">
         <link href="../CSS/barra.css" rel="stylesheet">
+        <link href="../CSS/scroll.css" rel="stylesheet">
 
 
         <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
@@ -40,23 +41,6 @@
             float:left;
             width:100%;
             padding : 50px 0;
-        }
-        .scrollbar {
-            float: left;
-            width: 100%;
-            background: #fff;
-            overflow-y: scroll;
-        }
-
-        .scrollbar-primary::-webkit-scrollbar {
-            width: 5px;
-            background-color: #F5F5F5; 
-        }
-
-        .scrollbar-primary::-webkit-scrollbar-thumb {
-            border-radius: 5px;
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-            background-color: #069302; 
         }
 
         .banner-sec{/*background:url(https://static.pexels.com/photos/33972/pexels-photo.jpg)  no-repeat left bottom;*/ background-size:cover; min-height:500px; border-radius: 0 10px 10px 0; padding:0;}
@@ -82,7 +66,7 @@
         .banner-text h2:after{content:" "; width:100px; height:5px; background:#FFF; display:block; margin-top:20px; border-radius:3px;}
         .banner-text p{color:#fff;}
     </style>
-    <body>
+    <body class="scrollbar scrollbar-primary">
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
@@ -108,7 +92,7 @@
                             <a class="nav-link" href="../Controlador?direccion=peliculas">Peliculas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../Controlador?direccion=cuenta">Cuenta</a>
+                            <a class="nav-link" href="../Controlador?direccion=miCuenta">Cuenta</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="../Controlador?direccion=subirArchivo">Subir archivo</a>
@@ -139,6 +123,10 @@
                                                 <small class="text-muted">Subir una <b>Pelicula</b></small>
                                             </div>
                                             <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="archivoPortada" class="text-uppercase" style="width:100%;">Portada de la pelicula</label>
+                                                    <input type="file" name="archivoPortada" id="archivoPeliculaPortada" accept="image/*"  required/>
+                                                </div>
                                                 <div class="form-group">
                                                     <div style="color: red;" id="existeCorreo"></div>
                                                     <label for="titulo" class="text-uppercase">Título</label>
@@ -176,7 +164,13 @@
                                                     </textarea>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="file" name="archivo" id="archivoPelicula" accept="video/*" required/>
+                                                    <small class="text-muted">Este campo es muy importante. Procura ser lo mas exacto posible ya que de el van a depender las programaciones que haga la gente de este contenido</small>
+                                                    <label for="duracionP" class="text-uppercase" style="width:100%;">Duracion de la pelicula</label>
+                                                    <input type="time" class="form-control" name="duracionP" id="duracionP" value="00:00" required/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="archivoPelicula" class="text-uppercase" style="width:100%;">Pelicula</label>
+                                                    <input type="file" name="archivo" id="archivoPelicula" accept="video/mp4"  required/>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar progress-bar-striped progress-bar-animated oculto" id="barraPelicula" role="progressbar"  aria-valuemin="0" aria-valuemax="100">
@@ -203,12 +197,17 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="form-group">
+                                                    <small style="color: green;">Si ya has subido mas capitulos en tu canal de esta serie, pon exactamente el mismo título para que se añada a la lista de la temporada que corresponda. De lo contrario se añadirá como una nueva serie.</small>
+                                                    <label for="archivoPortada" class="text-uppercase" style="width:100%;">Portada de la serie</label>
+                                                    <input type="file" name="archivoPortada" id="archivoSeriePortada" accept="image/*"  required/>
+                                                </div>
+                                                <div class="form-group">
                                                     <label for="tituloSerie" class="text-uppercase">Título de la serie</label>
-                                                    <input type="text" class="form-control" placeholder="" id="tituloSerie" name="tituloSerie" required>
+                                                    <input type="text" class="form-control" placeholder="" id="tituloSerie" name="tituloSerie" onkeyup="comprobarTituloSerie(this.value)" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="temporada" class="text-uppercase">Temporada</label>
-                                                    <input type="text" class="form-control" placeholder="Ej. Temporada 6" id="temporada" name="temporada" required>
+                                                    <input type="number" class="form-control" id="temporada" name="temporada" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <div style="color: red;" id="existeCorreo"></div>
@@ -238,7 +237,13 @@
                                                     </textarea>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="file" name="archivo" id="archivoSerie" accept="video/*" required/>
+                                                    <small class="text-muted">Este campo es muy importante. Procura ser lo mas exacto posible ya que de el van a depender las programaciones que haga la gente de este contenido</small>
+                                                    <label for="duracionC" class="text-uppercase" style="width:100%;">Duracion del capitulo</label>
+                                                    <input type="time" class="form-control" name="duracionC" id="duracionC" value="00:00" required/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="archivoSerie"  class="text-uppercase" >Capitulo</label><br>
+                                                    <input type="file" name="archivo" id="archivoSerie" accept="video/mp4" required/>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar progress-bar-striped progress-bar-animated oculto" id="barraSerie" role="progressbar"  aria-valuemin="0" aria-valuemax="100">
@@ -265,6 +270,10 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="form-group">
+                                                    <label for="archivoPortada" class="text-uppercase" style="width:100%;">Miniatura de tu video</label>
+                                                    <input type="file" name="archivoPortada" id="archivoSeriePortada" accept="image/*"  required/>
+                                                </div>
+                                                <div class="form-group">
                                                     <div style="color: red;" id="existeCorreo"></div>
                                                     <label for="titulo" class="text-uppercase">Título</label>
                                                     <input type="text" class="form-control" placeholder="" id="titulo" name="titulo" required>
@@ -275,7 +284,7 @@
                                                     </textarea>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="file" name="archivo" id="archivoVideo" accept="video/*" required/>
+                                                    <input type="file" name="archivo" id="archivoVideo" accept="video/mp4" required/>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar progress-bar-striped progress-bar-animated oculto" id="barraVideo" role="progressbar"  aria-valuemin="0" aria-valuemax="100">
@@ -296,134 +305,7 @@
                             </div>
 
                         </div>
-                        <!--<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>-->
                     </header>
-                </div>
-                <div class="col-lg-9">
-                    <!--<form action="../SubirArchivo" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="variable" value=""/>
-                        <div class="form-group">
-                            <input type="file" name="archivo" id="archivo" accept="video/*"/>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated oculto" id="barra" role="progressbar"  aria-valuemin="0" aria-valuemax="100">
-                                0%
-                            </div>
-                        </div>
-                        <progress value="0" max="100" class="oculto" >
-
-                        </progress>
-                        <input type="submit" name="Enviar" id="enviar"/>
-                    </form>-->
-
-
-                    <!--<div class="row">
-
-                        <div class="col-lg-12 col-md-12 mb-12 my-4">
-
-                            <div class="card h-100">
-                                <form action="../SubirArchivo" method="post" enctype="multipart/form-data">
-                                    <div class="card-header">
-                                        <small class="text-muted">Pelicula</small>
-                                    </div>
-                                    <div class="card-body">
-
-                                        <input type="hidden" name="variable" value=""/>
-                                        <div class="form-group">
-                                            <input type="file" name="archivo" id="archivo" accept="video/*"/>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated oculto" id="barra" role="progressbar"  aria-valuemin="0" aria-valuemax="100">
-                                                0%
-                                            </div>
-                                        </div>
-                                        <progress value="0" max="100" class="oculto" >
-
-                                        </progress>
-
-
-                                    </div>
-                                    <div class="card-footer">
-                                        <input type="submit" name="Enviar" id="enviar" class="navbar-toggler icon-white" style="background-color: #069d02;">
-                                        <span class="fa fa-arrow-circle-up" style="color: white;"></span>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 col-md-12 mb-12 my-4">
-
-                            <div class="card h-100">
-                                <form action="../SubirArchivo" method="post" enctype="multipart/form-data">
-                                    <div class="card-header">
-                                        <small class="text-muted">Serie</small>
-                                    </div>
-                                    <div class="card-body">
-
-                                        <input type="hidden" name="variable" value=""/>
-                                        <div class="form-group">
-                                            <input type="file" name="archivo" id="archivo" accept="video/*"/>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated oculto" id="barra" role="progressbar"  aria-valuemin="0" aria-valuemax="100">
-                                                0%
-                                            </div>
-                                        </div>
-                                        <progress value="0" max="100" class="oculto" >
-
-                                        </progress>
-
-
-                                    </div>
-                                    <div class="card-footer">
-                                        <input type="submit" name="Enviar" id="enviar" class="navbar-toggler icon-white" style="background-color: #069d02;">
-                                        <span class="fa fa-arrow-circle-up" style="color: white;"></span>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 col-md-12 mb-12 my-4">
-
-                            <div class="card h-100">
-                                <form action="../SubirArchivo" method="post" enctype="multipart/form-data">
-                                    <div class="card-header">
-                                        <small class="text-muted">Video</small>
-                                    </div>
-                                    <div class="card-body">
-
-                                        <input type="hidden" name="variable" value=""/>
-                                        <div class="form-group">
-                                            <input type="file" name="archivo" id="archivo" accept="video/*"/>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated oculto" id="barra" role="progressbar"  aria-valuemin="0" aria-valuemax="100">
-                                                0%
-                                            </div>
-                                        </div>
-                                        <progress value="0" max="100" class="oculto" >
-
-                                        </progress>
-
-
-                                    </div>
-                                    <div class="card-footer">
-                                        <input type="submit" name="Enviar" id="enviar" class="navbar-toggler icon-white" style="background-color: #069d02;">
-                                        <span class="fa fa-arrow-circle-up" style="color: white;"></span>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>-->
-                    <!-- /.row -->
-
                 </div>
                 <!-- /.col-lg-9 -->
 

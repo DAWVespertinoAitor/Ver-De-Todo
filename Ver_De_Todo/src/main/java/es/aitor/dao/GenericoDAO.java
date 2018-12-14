@@ -158,6 +158,28 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
     }
 
     @Override
+    public <T> List<T> getOtrosCanales(String canales) {
+
+        List<T> objetoRecuperado = null;
+        Query query = null;
+        String sql = "SELECT * FROM usuarios WHERE NOT idUsuario IN(" + canales + ");";
+
+        try {
+            startTransaction();
+            query = sesion.createSQLQuery(sql);
+            query.setResultTransformer(Transformers.aliasToBean(Usuario.class));
+            List<Usuario> listaCanal = (List<Usuario>) query.list();
+            objetoRecuperado = (List<T>) listaCanal;
+        } catch (HibernateException he) {
+            this.handleExcepcion(he);
+        } finally {
+            this.endTransaction();
+        }
+
+        return objetoRecuperado;
+    }
+
+    @Override
     public <T> List<T> getMisSuscripciones(int canal) {
 
         List<T> objetoRecuperado = null;
@@ -208,7 +230,7 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
     public <T> List<T> getPeliculas(int canal) {
         List<T> objetoRecuperado = null;
         Query query = null;
-        String sql = "SELECT idPelicula, titulo, fechaDeSubida, genero, pais, director, sinopsis, actores, nombreArchivo, subtitulos FROM peliculas WHERE idUsuario='" + canal + "' ;";
+        String sql = "SELECT idPelicula, titulo, fechaDeSubida, duracionPelicula, genero, pais, director, sinopsis, actores, nombreArchivo, nombrePortada, subtitulos FROM peliculas WHERE idUsuario='" + canal + "' ORDER BY fechaDeSubida DESC LIMIT 3;";
         try {
             startTransaction();
             query = sesion.createSQLQuery(sql);
@@ -231,7 +253,7 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
     public <T> List<T> getSeries(int canal) {
         List<T> objetoRecuperado = null;
         Query query = null;
-        String sql = "SELECT idSerie, tituloSerie, temporada, tituloCapitulo, numCapitulo, idioma, subtitulos, nombreArchivo, descripcion, fechaDeSubida FROM series WHERE idUsuario='" + canal + "' ORDER BY fechaDeSubida DESC LIMIT 3;";
+        String sql = "SELECT idSerie, tituloSerie, temporada, tituloCapitulo, numCapitulo, idioma, subtitulos, nombreArchivo, nombrePortada, descripcion, fechaDeSubida, duracionCapitulo FROM series WHERE idUsuario='" + canal + "' ORDER BY fechaDeSubida DESC LIMIT 3;";
         try {
             startTransaction();
             query = sesion.createSQLQuery(sql);
@@ -254,7 +276,7 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
     public <T> List<T> getVideos(int canal) {
         List<T> objetoRecuperado = null;
         Query query = null;
-        String sql = "SELECT idVideo, titulo, descripcion, fechaDeSubida FROM videos WHERE idUsuario='" + canal + "' ORDER BY fechaDeSubida DESC LIMIT 3;";
+        String sql = "SELECT idVideo, titulo, descripcion, nombreArchivo, nombrePortada, fechaDeSubida FROM videos WHERE idUsuario='" + canal + "' ORDER BY fechaDeSubida DESC LIMIT 3;";
         try {
             startTransaction();
             query = sesion.createSQLQuery(sql);
@@ -272,12 +294,49 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
         }
         return objetoRecuperado;
     }
+    
+    @Override
+    public List<Serie> getBuscarSeries(int canal) {
+        List<Serie> listaSerie = null;
+        Query query = null;
+        String sql = "SELECT DISTINCT idSerie, tituloSerie, temporada, tituloCapitulo, numCapitulo, idioma, subtitulos, nombreArchivo, nombrePortada, descripcion FROM series WHERE idUsuario='" + canal + "';";
+        try {
+            startTransaction();
+            query = sesion.createSQLQuery(sql);
+            query.setResultTransformer(Transformers.aliasToBean(Serie.class));
+            listaSerie = (List<Serie>) query.list();
+
+        } catch (HibernateException he) {
+            this.handleExcepcion(he);
+        } finally {
+            this.endTransaction();
+        }
+        return listaSerie;
+    }
+    @Override
+    public List<Serie> getTraerSerie(String nombreSerie, int canal) {
+        List<Serie> listaSerie = null;
+        Query query = null;
+        String sql = "SELECT idSerie, tituloSerie, temporada, tituloCapitulo, numCapitulo, idioma, subtitulos, nombreArchivo, nombrePortada, descripcion FROM series WHERE idUsuario='" + canal + "' AND tituloSerie = '"+nombreSerie+"' ORDER BY temporada ASC;";
+        try {
+            startTransaction();
+            query = sesion.createSQLQuery(sql);
+            query.setResultTransformer(Transformers.aliasToBean(Serie.class));
+            listaSerie = (List<Serie>) query.list();
+
+        } catch (HibernateException he) {
+            this.handleExcepcion(he);
+        } finally {
+            this.endTransaction();
+        }
+        return listaSerie;
+    }
 
     @Override
     public List<Programacion> getProgramacion(int canal, String fechaReproduccion) {
         List<Programacion> listaProgramacion = null;
         Query query = null;
-        String sql = "SELECT idProgramacion, fechaReproduccion, horaReproduccion, idPelicula, idSerie FROM programaciones WHERE idUsuario='"+canal+"' AND fechaReproduccion > '"+fechaReproduccion+"';";//WHERE idUsuario='" + canal + "'"+/*fechaReproduccion+*/";";
+        String sql = "SELECT idProgramacion, fechaReproduccion, horaReproduccion, idPelicula, idSerie, duracionContenido FROM programaciones WHERE idUsuario='" + canal + "' AND fechaReproduccion >= '" + fechaReproduccion + "' ORDER BY fechaReproduccion ASC;";//WHERE idUsuario='" + canal + "'"+/*fechaReproduccion+*/";";
         try {
             startTransaction();
             query = sesion.createSQLQuery(sql);
@@ -290,6 +349,63 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
             this.endTransaction();
         }
         return listaProgramacion;
+    }
+
+    @Override
+    public List<Pelicula> getTodasPeliculas(int canal) {
+        List<Pelicula> listaPelicula = null;
+        Query query = null;
+        String sql = "SELECT idPelicula, titulo, fechaDeSubida, duracionPelicula, genero, pais, director, sinopsis, actores, nombreArchivo, nombrePortada, subtitulos FROM peliculas WHERE idUsuario='" + canal + "' ORDER BY fechaDeSubida DESC;";
+        try {
+            startTransaction();
+            query = sesion.createSQLQuery(sql);
+            query.setResultTransformer(Transformers.aliasToBean(Pelicula.class));
+            listaPelicula = (List<Pelicula>) query.list();
+
+        } catch (HibernateException he) {
+            this.handleExcepcion(he);
+        } finally {
+            this.endTransaction();
+        }
+        return listaPelicula;
+    }
+
+    @Override
+    public List<Serie> getTodasSeries(int canal) {
+        List<Serie> listaSerie = null;
+        Query query = null;
+        String sql = "SELECT idSerie, tituloSerie, temporada, tituloCapitulo, numCapitulo, idioma, subtitulos, nombreArchivo, nombrePortada, descripcion, fechaDeSubida, duracionCapitulo FROM series WHERE idUsuario='" + canal + "' ORDER BY fechaDeSubida DESC;";
+        try {
+            startTransaction();
+            query = sesion.createSQLQuery(sql);
+            query.setResultTransformer(Transformers.aliasToBean(Serie.class));
+            listaSerie = (List<Serie>) query.list();
+
+        } catch (HibernateException he) {
+            this.handleExcepcion(he);
+        } finally {
+            this.endTransaction();
+        }
+        return listaSerie;
+    }
+
+    @Override
+    public List<Video> getTodosVideos(int canal) {
+        List<Video> listaVideo = null;
+        Query query = null;
+        String sql = "SELECT idVideo, titulo, descripcion, nombreArchivo, nombrePortada, fechaDeSubida FROM videos WHERE idUsuario='" + canal + "' ORDER BY fechaDeSubida DESC LIMIT 3;";
+        try {
+            startTransaction();
+            query = sesion.createSQLQuery(sql);
+            query.setResultTransformer(Transformers.aliasToBean(Video.class));
+            listaVideo = (List<Video>) query.list();
+
+        } catch (HibernateException he) {
+            this.handleExcepcion(he);
+        } finally {
+            this.endTransaction();
+        }
+        return listaVideo;
     }
 
     @Override
