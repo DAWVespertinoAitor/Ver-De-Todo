@@ -41,6 +41,11 @@ public class SuscripcionYProg extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * 
+     * Este metodo se encarga de subir a la base de datos la información 
+     * necesaria para cuando el usuario crea una programación, ya sea pelicula o serie.
+     * 
+     * 
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -105,6 +110,9 @@ public class SuscripcionYProg extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * 
+     * Este metodo es el encargado de la suscripción a los canales.
+     * También es el encargado de anular la suscripción pedida.
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

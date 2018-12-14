@@ -37,6 +37,10 @@ public class RegistroAjax extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * 
+     * Este controlador se encarga de la validación de los datos.
+     * Por ejemplo, que no se registre una persona con un email que ya existe en
+     * la base de datos.
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

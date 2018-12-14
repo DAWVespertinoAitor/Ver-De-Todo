@@ -42,13 +42,16 @@ import javax.servlet.http.HttpSession;
 public class Controlador extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * Servlet controlador, se encarga de toda la navegación y la logica que conlleva
+     * cada una de las secciones.
+     * Seccion inicio: te redirige a inicio.jsp
+     * Seccion video: obtiene los videos de los canales a los que estas suscrito
+     * y a los que no estas suscrito
+     * Seccion series: obtiene las series de los canales a los que estas suscrito
+     * y a los que no estas suscrito
+     * Seccion peliculas: obtiene las peliculas de los canales a los que estas suscrito
+     * y a los que no estas suscrito
+     * 
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -52,6 +52,11 @@ public class Login extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * 
+     * Se encarga de saber si el usuario ha introducido bien las credenciales o no.
+     * Tambien comprueba la programación que tiene y descarta la que ya ha pasado de fecha u hora.
+     * Obtiene los canales a los que estas suscrito.
+     * Por otro lado tambien se encarga de subir los datos registro a la base de datos.
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -71,7 +76,6 @@ public class Login extends HttpServlet {
         String claveRepe;
         switch (opcionRegistro) {
             case "login":
-                System.out.println("Entro en el login");
                 List<Usuario> usuarioLogin = null;
                 Usuario usuarioLogin2 = null;
                 String emailLogin = request.getParameter("email");
@@ -131,9 +135,6 @@ public class Login extends HttpServlet {
                     DateTimeFormatter fmtFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     LocalDate hoy = LocalDate.now();
                     LocalDateTime hora = LocalDateTime.now();
-                    System.out.println("-----------------------------");
-                    System.out.println("Que hora es? Son las " + fmt.format(hora));
-                    System.out.println("Que dia es? Estamos " + fmtFecha.format(hoy));
 //                    Date hoy = new Date(ahora.getYear(), ahora.now().getMonthValue(), ahora.now().getDayOfMonth());
                     String fechaHoy = "2018-" + String.valueOf(hoy.getMonthValue()) + "-" + String.valueOf(hoy.getDayOfMonth());
                     List<Programacion> listaProgramacion = gdao.getProgramacion(usuarioLogin2.getIdUsuario(), fechaHoy);
@@ -162,9 +163,6 @@ public class Login extends HttpServlet {
             case "registro":
                 url = "JSP/inicio.jsp";
                 Usuario usuario = new Usuario();
-//                Canal canal = new Canal();
-//                String claveRepetida = request.getParameter("claveR");
-//                boolean clavesIguales = false;
 
                 try {
                     BeanUtils.populate(usuario, request.getParameterMap());
@@ -175,17 +173,11 @@ public class Login extends HttpServlet {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-//                usuario.setIdCanal(canal);
                 gdao.insertUpdate(usuario);
-//                if(usuario.getPassword().equals(claveRepetida)){
-//                    clavesIguales = true;
-//                }
 
                 break;
         }
-        System.out.println("Que direccion llevo " + url);
         response.sendRedirect(url);
-//        request.getRequestDispatcher(url).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

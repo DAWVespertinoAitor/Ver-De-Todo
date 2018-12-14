@@ -64,7 +64,7 @@
             .container{background:#fff; border-radius: 10px; box-shadow:15px 20px 0px rgba(0,0,0,0.1);}
             .carousel-inner{border-radius:0 10px 10px 0;}
             .carousel-caption{text-align:left; left:5%;}
-            .carousel-item{height: 90vh;}
+            .carousel-item{height: 95vh;}
             .carousel-indicatorsLogin li{background-color: #069302; bottom: -60px;}
             .carousel-indicatorsLogin .active{background-color: #343a40;}
             .login1{height: 90%;}

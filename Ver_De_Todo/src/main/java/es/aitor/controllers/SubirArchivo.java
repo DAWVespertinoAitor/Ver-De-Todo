@@ -39,11 +39,26 @@ import org.apache.commons.beanutils.BeanUtils;
 /**
  *
  * @author aitor
+ *
  */
 @MultipartConfig
 @WebServlet(name = "SubirArchivo", urlPatterns = {"/SubirArchivo"})
 public class SubirArchivo extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods. 
+     * 
+     * Este metodo se encarga de la obtención de los datos del
+     * contenido a subir crea un token para que el nombre del archivo no se
+     * repita dentro del servidor y sube a base de datos las credenciales
+     * obtenidas.
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -70,23 +85,23 @@ public class SubirArchivo extends HttpServlet {
 
         Part filePart = request.getPart("archivo"); // Obtiene el archivo
         Part filePartPortada = request.getPart("archivoPortada"); // Obtiene la portada
-        
+
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
         String fileNamePortada = Paths.get(filePartPortada.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
 
         //InputStream fileContent = filePart.getInputStream(); //Lo transforma en InputStream
         String path = "/archivos/";
-        
+
         File uploads = new File(path); //Carpeta donde se guardan los archivos
-        
+
         uploads.mkdirs(); //Crea los directorios necesarios
-        
+
         File file = null;
         File filePortada = null;
         Timestamp fechaDeSubida = null;
         switch (tipoArchivo) {
             case "pelicula":
-                String duracionPelicula = request.getParameter("duracionP")+":00";
+                String duracionPelicula = request.getParameter("duracionP") + ":00";
                 Time duracion = Time.valueOf(duracionPelicula);
                 codigo = "pelicula";
                 try {
@@ -101,8 +116,8 @@ public class SubirArchivo extends HttpServlet {
                 }
 
                 file = File.createTempFile(codigo + "-", "-" + fileName, uploads); //Evita que hayan dos archivos con el mismo nombre
-                filePortada = File.createTempFile(codigo+"-portada" + "-", "-" + fileNamePortada, uploads); //Evita que hayan dos archivos con el mismo nombre
-                
+                filePortada = File.createTempFile(codigo + "-portada" + "-", "-" + fileNamePortada, uploads); //Evita que hayan dos archivos con el mismo nombre
+
                 try (InputStream input = filePart.getInputStream()) {
                     Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
@@ -118,7 +133,7 @@ public class SubirArchivo extends HttpServlet {
                 break;
             case "serie":
                 codigo = "serie";
-                String duracionCapitulo = request.getParameter("duracionC")+":00";
+                String duracionCapitulo = request.getParameter("duracionC") + ":00";
                 Time duracionCa = Time.valueOf(duracionCapitulo);
                 try {
                     fechaDeSubida = new Timestamp(System.currentTimeMillis());
@@ -131,16 +146,16 @@ public class SubirArchivo extends HttpServlet {
                 }
 
                 file = File.createTempFile(codigo + "-", "-" + fileName, uploads); //Evita que hayan dos archivos con el mismo nombre
-                filePortada = File.createTempFile(codigo+"-portada" + "-", "-" + fileNamePortada, uploads); //Evita que hayan dos archivos con el mismo nombre
-                
+                filePortada = File.createTempFile(codigo + "-portada" + "-", "-" + fileNamePortada, uploads); //Evita que hayan dos archivos con el mismo nombre
+
                 try (InputStream input = filePart.getInputStream()) {
                     Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
-                
+
                 try (InputStream input = filePartPortada.getInputStream()) {
                     Files.copy(input, filePortada.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
-                
+
                 serie.setNombreArchivo(file.getName());
                 serie.setNombrePortada(filePortada.getName());
                 serie.setDuracionCapitulo(duracionCa);
@@ -160,12 +175,12 @@ public class SubirArchivo extends HttpServlet {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 file = File.createTempFile(codigo + "-", "-" + fileName, uploads); //Evita que hayan dos archivos con el mismo nombre
-                filePortada = File.createTempFile(codigo+"-portada" + "-", "-" + fileNamePortada, uploads); //Evita que hayan dos archivos con el mismo nombre
-                
+                filePortada = File.createTempFile(codigo + "-portada" + "-", "-" + fileNamePortada, uploads); //Evita que hayan dos archivos con el mismo nombre
+
                 try (InputStream input = filePart.getInputStream()) {
                     Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
-                
+
                 try (InputStream input = filePartPortada.getInputStream()) {
                     Files.copy(input, filePortada.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }

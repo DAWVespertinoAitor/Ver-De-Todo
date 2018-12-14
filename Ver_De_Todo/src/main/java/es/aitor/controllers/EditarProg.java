@@ -32,13 +32,8 @@ import javax.servlet.http.HttpSession;
 public class EditarProg extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * Proccess request es el encargado de subir a la base de datos
+     * la programación con los datos a actualizar que quiere hacer el usuario
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -96,11 +91,10 @@ public class EditarProg extends HttpServlet {
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * 
+     * Se encarga de borrar la programación que el usuario ha escogido.
+     * Tambien es el encargado de borrar de sesion el contenido programado
+     * que el usuario acaba de ver.
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -134,9 +128,6 @@ public class EditarProg extends HttpServlet {
         }
 
         sesion.setAttribute("programacion", listaProgramacion);
-        if (listaProgramacion.size() == 0) {
-            out.println("programaciones");
-        }
     }
 
     /**

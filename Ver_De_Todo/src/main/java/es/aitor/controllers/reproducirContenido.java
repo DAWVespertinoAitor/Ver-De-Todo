@@ -35,6 +35,9 @@ public class reproducirContenido extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * 
+     * Este controlador, es llamado por ajax para obtener y reproducir el 
+     * contenido programado por el usuario.
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

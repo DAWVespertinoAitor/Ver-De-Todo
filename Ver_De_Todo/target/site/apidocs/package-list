@@ -1,0 +1,5 @@
+es.aitor.beans
+es.aitor.controllers
+es.aitor.dao
+es.aitor.daofactory
+es.aitor.persistencia

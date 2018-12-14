@@ -178,7 +178,7 @@
                                                     <c:forEach var="pelicula" items="${canalesNoSusPelicula.listaPeliculas}">
                                                         <div class="col-lg-4 mb-4" style="float:left;">
                                                             <div class="card h-100">
-                                                                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                                                                <a href="#"><img class="card-img-top" src="http://127.0.0.1:8887/${pelicula.nombrePortada}" alt="Image" style="max-height: 321.19px; min-height: 321.19px;"></a>
                                                                 <div class="card-body" style="min-height: 170px; max-height: 170px;">
                                                                     <h4 class="card-title">
                                                                         <a href="#">${pelicula.titulo}</a>
